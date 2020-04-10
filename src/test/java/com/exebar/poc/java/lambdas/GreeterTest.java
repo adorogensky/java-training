@@ -3,6 +3,9 @@ package com.exebar.poc.java.lambdas;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Function;
+import java.util.stream.Stream;
+
 class GreeterTest {
 
     private static final String ANSI_RESET = "\u001B[0m";
@@ -12,7 +15,7 @@ class GreeterTest {
     private static final String ANSI_BLUE = "\u001B[34m";
 
     @Test
-    void test() {
+    void testVoidLambdaFunctions() {
         Greeter greeter = new Greeter();
 
         Greeting englishGreetingAsLambda = () -> System.out.println(ANSI_GREEN + "Hello!" + ANSI_RESET);
@@ -34,5 +37,24 @@ class GreeterTest {
 
         greeter.greet(russianGreetingAsLambda);
         greeter.greet(russianGreetingAsOuterImplementation);
+    }
+
+    @Test
+    void testReturnValueLambdaFunctionsForms() {
+        Function<Integer, Integer> squaredLambdaExplicitParamTypeAndReturn = (Integer i) -> { return i * i; };
+        Function<Integer, Integer> squaredLambdaExplicitParamTypeAndImplicitReturn = (Integer i) -> i * i;
+        Function<Integer, Integer> squaredLambdaImplicitParamTypeAndExplicitReturn = (i) -> { return i * i; };
+        Function<Integer, Integer> squaredLambdaImplicitParamTypeAndReturn = (i) -> i * i;
+        Function<Integer, Integer> squaredLambdaImplicitSimpleParamTypeAndReturn = i -> i * i;
+
+        Stream.of(
+                squaredLambdaExplicitParamTypeAndImplicitReturn,
+                squaredLambdaExplicitParamTypeAndReturn,
+                squaredLambdaImplicitParamTypeAndExplicitReturn,
+                squaredLambdaImplicitParamTypeAndReturn,
+                squaredLambdaImplicitSimpleParamTypeAndReturn
+        ).forEach(
+            squared -> System.out.printf("5 squared is = %2d\n", squared.apply(5))
+        );
     }
 }
