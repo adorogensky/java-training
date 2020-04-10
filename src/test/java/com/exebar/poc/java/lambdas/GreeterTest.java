@@ -8,7 +8,7 @@ class GreeterTest {
     @Test
     void test() {
         Greeter greeter = new Greeter();
-        greeter.greet(new EnglishGreeting());
-        greeter.greet(new RussianGreeting());
+        greeter.greet(() -> System.out.println("Hello!"));
+        greeter.greet(() -> System.out.println("Привет!"));
     }
 }
