@@ -40,4 +40,19 @@ class PersonListTests {
                         )
         );
     }
+
+    @Test
+    void printPeopleLastNameStartsWith_C() {
+        personList.stream().filter(
+                person -> person.getLastName().startsWith("C")
+        ).forEach(
+                person ->
+                        System.out.printf(
+                                "firstName = %-5s, lastName = %-9s, age = %2d\n",
+                                person.getFirstName(),
+                                person.getLastName(),
+                                person.getAge()
+                        )
+        );
+    }
 }
