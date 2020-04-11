@@ -3,10 +3,12 @@ package com.exebar.poc.java.lambdas;
 import com.exebar.poc.java.common.Person;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static com.exebar.poc.java.common.PersonTestData.*;
 import static java.util.Arrays.asList;
+import static java.util.Comparator.comparing;
 
 class PersonListTests {
 
@@ -15,7 +17,7 @@ class PersonListTests {
         List<Person> personList = asList(mikeWalsh(), jakeHillis(), sumitChaudhari());
 
         personList.sort(
-                (left, right) -> left.getLastName().compareTo(right.getLastName())
+                comparing(Person::getLastName)
         );
 
         personList.forEach(
