@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import static com.exebar.poc.java.common.PersonTestData.*;
 import static java.util.Arrays.asList;
@@ -12,7 +13,7 @@ import static java.util.Comparator.comparing;
 
 class PersonListTests {
 
-    private final List<Person> personList = asList(mikeWalsh(), jakeHillis(), sumitChaudhari());
+    private final List<Person> people = asList(mikeWalsh(), jakeHillis(), sumitChaudhari());
 
     private final Consumer<Person> printPerson =
             person -> System.out.printf(
@@ -24,22 +25,25 @@ class PersonListTests {
 
     @Test
     void printAgesOfPeopleSortedByLastName() {
-        personList.sort(
-                comparing(Person::getLastName)
-        );
-
-        personList.forEach(printPerson);
+        people.sort(comparing(Person::getLastName));
+        print(people);
     }
 
     @Test
     void printPeople() {
-        personList.forEach(printPerson);
+        print(people);
     }
 
     @Test
     void printPeopleLastNameStartsWith_C() {
-        personList.stream().filter(
-                person -> person.getLastName().startsWith("C")
-        ).forEach(printPerson);
+        print(people, person -> person.getLastName().startsWith("C"));
+    }
+
+    private void print(List<Person> people) {
+        print(people, person -> true);
+    }
+
+    private void print(List<Person> people, Predicate<Person> filter) {
+        people.stream().filter(filter).forEach(printPerson);
     }
 }
