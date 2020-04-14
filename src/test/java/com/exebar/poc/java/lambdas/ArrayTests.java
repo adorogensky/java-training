@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -142,5 +143,14 @@ class ArrayTests {
         Arrays.stream(names).collect(
                 collectingAndThen(toList(), list -> { list.add("unknown"); return list; })
         ).forEach(System.out::println);
+    }
+
+    @Test
+    void combineWordsIntoSentence() {
+        String[] words = { "hello", "world" };
+        assertEquals(
+                "hello world.",
+                Arrays.stream(words).collect(Collectors.joining(" ", "", "."))
+        );
     }
 }
