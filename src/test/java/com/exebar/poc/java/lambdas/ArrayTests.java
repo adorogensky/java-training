@@ -17,11 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 // distinct, min, max, count, reduce(3)
 // anyMatch, allMatch, noneMatch
 // filter, sorted(2), peek
-// iterate, forEach, forEachOrdered, collect(3) ??
+// concat, generate, iterate, forEach, forEachOrdered, collect(3) ??
+// findFirst, findAny
 // takeWhile, dropWhile ???
-// findFirst, findAny ???
-// generate ???
-// concat ???
+
 class ArrayTests {
 
     private final int [] numbers = { 1, 2, 3, 4 };
@@ -99,5 +98,16 @@ class ArrayTests {
     @Test
     void printFiveRandomUUIDs() {
         Stream.generate(UUID::randomUUID).limit(5).forEach(System.out::println);
+    }
+
+    @Test
+    void printFibbonaciNumbers() {
+        // 0, 1 => 0, 1, 1 => 0, 1, 1, 2 => 0, 1, 1, 2, 3 => 0, 1, 1, 2, 3, 5
+        Stream.iterate(
+                new int[] { 0, 1 },
+                twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
+        ).limit(10).mapToInt(
+                twoNumbers -> twoNumbers[0]
+        ).forEach(System.out::println);
     }
 }
