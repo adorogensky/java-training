@@ -6,17 +6,16 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // of(2), ofNullable, empty
-// filter
 // map, mapToInt, mapToLong, mapToDouble
 // flatMap, flatMapToInt, flatMapToLong, flatMapToDouble
 // distinct, min, max, count, reduce(3)
-// sorted(2)
-// peek, forEach, forEachOrdered
-// collect(3) ??
+// anyMatch, allMatch, noneMatch
+// filter, sorted(2), peek
+// forEach, forEachOrdered, collect(3) ??
 // takeWhile, dropWhile ???
-// anyMatch, allMatch, noneMatch ???
 // findFirst, findAny ???
 // iterate ???
 // generate ???
@@ -70,5 +69,12 @@ class ArrayTests {
 
     private int factorial(int n) {
         return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
+    }
+
+    @Test
+    void matchNumbers() {
+        assertTrue(IntStream.of(numbers).noneMatch(i -> i == 5));
+        assertTrue(IntStream.of(numbers).anyMatch(i -> i == 4));
+        assertTrue(IntStream.of(numbers).allMatch(i -> i < 5));
     }
 }
