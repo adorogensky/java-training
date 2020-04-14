@@ -11,14 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // filter
 // map, mapToInt, mapToLong, mapToDouble
 // flatMap, flatMapToInt, flatMapToLong, flatMapToDouble
-// collect(3) ??
 // distinct, min, max, count
 // sorted(2)
 // peek
 // forEach, forEachOrdered
+// collect(3) ??
 // takeWhile, dropWhile ???
 // reduce(3) ?
-//
 // anyMatch, allMatch, noneMatch ???
 // findFirst, findAny ???
 // iterate ???
@@ -33,6 +32,14 @@ class ArrayTests {
     @Test
     void processAndPrintNumbers() {
         IntStream.of(numbers).map(x -> x / 2).forEach(System.out::println);
+
+    }
+
+    @Test
+    void processAndPrintNumbersWithDebuggingInfo() {
+        IntStream.of(numbers).peek(
+            x -> System.out.println("original = " + x)
+        ).map(x -> x / 2).forEach(System.out::println);
 
     }
 
