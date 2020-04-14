@@ -3,6 +3,7 @@ package com.exebar.poc.java.lambdas;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -87,5 +88,10 @@ class ArrayTests {
         Stream.iterate(0, i -> i < numbers.length, i -> i + 1).forEach(
                 i -> System.out.println(numbers[i])
         );
+    }
+
+    @Test
+    void printFiveRandomNumbers() {
+        Stream.generate(() -> new Random().nextInt(10)).limit(5).forEach(System.out::println);
     }
 }
