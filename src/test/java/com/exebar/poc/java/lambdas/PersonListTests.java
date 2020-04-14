@@ -25,8 +25,9 @@ class PersonListTests {
 
     @Test
     void printAgesOfPeopleSortedByLastName() {
-        people.sort(comparing(Person::getLastName));
-        print(people);
+        people.stream().sorted(
+                comparing(Person::getLastName)
+        ).forEach(printPerson);
     }
 
     @Test
