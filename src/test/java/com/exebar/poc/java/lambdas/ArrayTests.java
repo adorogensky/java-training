@@ -50,4 +50,9 @@ class ArrayTests {
     void findMaxNumber() {
         assertEquals(4, IntStream.of(numbers).max().getAsInt());
     }
+
+    @Test
+    void findMinNumber() {
+        assertEquals(1, IntStream.of(numbers).min().getAsInt());
+    }
 }
