@@ -11,13 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // filter
 // map, mapToInt, mapToLong, mapToDouble
 // flatMap, flatMapToInt, flatMapToLong, flatMapToDouble
-// distinct, min, max, count
+// distinct, min, max, count, reduce(3)
 // sorted(2)
-// peek
-// forEach, forEachOrdered
+// peek, forEach, forEachOrdered
 // collect(3) ??
 // takeWhile, dropWhile ???
-// reduce(3) ?
 // anyMatch, allMatch, noneMatch ???
 // findFirst, findAny ???
 // iterate ???
@@ -61,5 +59,16 @@ class ArrayTests {
     @Test
     void findMinNumber() {
         assertEquals(1, IntStream.of(numbers).min().getAsInt());
+    }
+
+    @Test
+    void calculateFactorials() {
+        assertEquals(2, factorial(2));
+        assertEquals(6, factorial(3));
+        assertEquals(24, factorial(4));
+    }
+
+    private int factorial(int n) {
+        return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
     }
 }
