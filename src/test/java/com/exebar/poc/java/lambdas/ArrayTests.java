@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -93,5 +94,10 @@ class ArrayTests {
     @Test
     void printFiveRandomNumbers() {
         Stream.generate(() -> new Random().nextInt(10)).limit(5).forEach(System.out::println);
+    }
+
+    @Test
+    void printFiveRandomUUIDs() {
+        Stream.generate(UUID::randomUUID).limit(5).forEach(System.out::println);
     }
 }
