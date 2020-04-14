@@ -153,4 +153,20 @@ class ArrayTests {
                 Arrays.stream(words).collect(Collectors.joining(" ", "", "."))
         );
     }
+
+    @Test
+    void printNumbersStatistics() {
+        DoubleSummaryStatistics statistics = IntStream.of(numbers).boxed().collect(summarizingDouble(x -> x));
+        assertEquals(1, statistics.getMin());
+        assertEquals(4, statistics.getMax());
+        assertEquals(4, statistics.getCount());
+        assertEquals(10, statistics.getSum());
+        assertEquals(2.5, statistics.getAverage());
+
+        assertEquals(1, IntStream.of(numbers).boxed().collect(minBy(Comparator.naturalOrder())).get());
+        assertEquals(4, IntStream.of(numbers).boxed().collect(maxBy(Comparator.naturalOrder())).get());
+        assertEquals(4, IntStream.of(numbers).boxed().collect(counting()));
+        assertEquals(10, IntStream.of(numbers).boxed().collect(summingInt(x -> x)));
+        assertEquals(2.5, IntStream.of(numbers).boxed().collect(averagingDouble(x -> x)));
+    }
 }
