@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 // of(2), ofNullable, empty
 // filter
 // map, mapToInt, mapToLong, mapToDouble
@@ -37,5 +39,10 @@ class ArrayTests {
     @Test
     void printInversionIndexes() {
         Arrays.stream(inversions).flatMapToInt(Arrays::stream).forEach(System.out::println);
+    }
+
+    @Test
+    void countDistinctNumbers() {
+        assertEquals(numbers.length, IntStream.of(numbers).distinct().count());
     }
 }
