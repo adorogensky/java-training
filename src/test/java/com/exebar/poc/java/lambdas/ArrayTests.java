@@ -135,4 +135,12 @@ class ArrayTests {
                 (key, value) -> System.out.printf("(%d, %s)\n", key, value)
         );
     }
+
+    @Test
+    void printNamesAndAppendUnknown() {
+        String[] names = { "alex", "nancy", "john" };
+        Arrays.stream(names).collect(
+                collectingAndThen(toList(), list -> { list.add("unknown"); return list; })
+        ).forEach(System.out::println);
+    }
 }
