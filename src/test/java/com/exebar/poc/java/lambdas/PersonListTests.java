@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import static java.util.stream.Collectors.groupingBy;
 
 import static com.exebar.poc.java.common.PersonTestData.*;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 class PersonListTests {
 
@@ -38,6 +40,13 @@ class PersonListTests {
     @Test
     void printPeopleLastNameStartsWith_C() {
         print(people, person -> person.getLastName().startsWith("C"));
+    }
+
+    @Test
+    void printCountOfPeopleByLengthOfFirstName() {
+        people.stream().collect(groupingBy(person -> person.getFirstName().length(), toList())).forEach(
+                (key, value) -> System.out.printf("firstNameLength = %d, peopleCount = %d\n", key, value.size())
+        );
     }
 
     private void print(List<Person> people) {

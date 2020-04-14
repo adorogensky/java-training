@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 // distinct, min, max, count, reduce(3)
 // anyMatch, allMatch, noneMatch
 // filter, sorted(2), peek
-// concat, generate, iterate, forEach, forEachOrdered, collect(3) ??
+// concat, generate, iterate, forEach, forEachOrdered, collect(3)
 // findFirst, findAny
 // takeWhile, dropWhile ???
 
