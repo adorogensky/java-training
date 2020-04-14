@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // map, mapToInt, mapToLong, mapToDouble
 // flatMap, flatMapToInt, flatMapToLong, flatMapToDouble
 // collect(3) ??
-// distinct
+// distinct, min, max, count
 // sorted(2)
 // peek
 // forEach, forEachOrdered
 // takeWhile, dropWhile ???
 // reduce(3) ?
-// min, max, count
+//
 // anyMatch, allMatch, noneMatch ???
 // findFirst, findAny ???
 // iterate ???
@@ -44,5 +44,10 @@ class ArrayTests {
     @Test
     void countDistinctNumbers() {
         assertEquals(numbers.length, IntStream.of(numbers).distinct().count());
+    }
+
+    @Test
+    void findMaxNumber() {
+        assertEquals(4, IntStream.of(numbers).max().getAsInt());
     }
 }
