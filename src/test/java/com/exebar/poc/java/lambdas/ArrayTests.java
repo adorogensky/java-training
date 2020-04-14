@@ -3,7 +3,7 @@ package com.exebar.poc.java.lambdas;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -123,5 +123,16 @@ class ArrayTests {
 
         assertEquals("1 2 3 4", numbersList.stream().map(i -> "" + i).collect(joining(" ")));
         assertEquals("1 2 3 4", numbersList.stream().map(i -> "" + i).reduce("", (x, y) -> x + " " + y).trim());
+    }
+
+    @Test
+    void printIndexAndNameMap() {
+        String[] names = {"alex", "nancy", "john"};
+
+        Stream.iterate(0, i -> i + 1).limit(names.length).collect(
+                toMap(Function.identity(), i -> names[i])
+        ).forEach(
+                (key, value) -> System.out.printf("(%d, %s)\n", key, value)
+        );
     }
 }
