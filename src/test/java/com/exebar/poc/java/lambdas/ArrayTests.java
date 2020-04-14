@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,10 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 // distinct, min, max, count, reduce(3)
 // anyMatch, allMatch, noneMatch
 // filter, sorted(2), peek
-// forEach, forEachOrdered, collect(3) ??
+// iterate, forEach, forEachOrdered, collect(3) ??
 // takeWhile, dropWhile ???
 // findFirst, findAny ???
-// iterate ???
 // generate ???
 // concat ???
 class ArrayTests {
@@ -76,5 +76,16 @@ class ArrayTests {
         assertTrue(IntStream.of(numbers).noneMatch(i -> i == 5));
         assertTrue(IntStream.of(numbers).anyMatch(i -> i == 4));
         assertTrue(IntStream.of(numbers).allMatch(i -> i < 5));
+    }
+
+    @Test
+    void printNumbers() {
+        Stream.iterate(0, i -> i + 1).limit(numbers.length).forEach(
+                i -> System.out.println(numbers[i])
+        );
+
+        Stream.iterate(0, i -> i < numbers.length, i -> i + 1).forEach(
+                i -> System.out.println(numbers[i])
+        );
     }
 }
