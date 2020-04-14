@@ -2,12 +2,12 @@ package com.exebar.poc.java.lambdas;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -109,5 +109,19 @@ class ArrayTests {
         ).limit(10).mapToInt(
                 twoNumbers -> twoNumbers[0]
         ).forEach(System.out::println);
+    }
+
+    @Test
+    void printNumbersSeparatedBySpace() {
+        List<Integer> numbersList = IntStream.of(numbers).boxed().collect(toList());
+        LinkedList<Integer> numbersLinkedList = IntStream.of(numbers).boxed().collect(
+                toCollection(LinkedList::new)
+        );
+
+        assertTrue(numbersList.containsAll(numbersLinkedList));
+        assertTrue(numbersLinkedList.containsAll(numbersList));
+
+        assertEquals("1 2 3 4", numbersList.stream().map(i -> "" + i).collect(joining(" ")));
+        assertEquals("1 2 3 4", numbersList.stream().map(i -> "" + i).reduce("", (x, y) -> x + " " + y).trim());
     }
 }
