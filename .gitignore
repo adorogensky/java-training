@@ -1,6 +1,10 @@
 .gradle/
-
 build/
 gradle/
 settings.gradle
+.classpath
+.idea/
+.project
+.settings/
+bin/
 
