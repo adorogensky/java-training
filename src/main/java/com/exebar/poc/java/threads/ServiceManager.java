@@ -28,13 +28,7 @@ public class ServiceManager {
 		Future<String> serviceAFutureResult = threadPool.submit(serviceA);
 		Future<String> serviceBFutureResult = threadPool.submit(serviceB);
 
-		while (!serviceAFutureResult.isDone() || !serviceBFutureResult.isDone()) {
-			System.out.println(
-				"Waiting for future execution results in the main thread with id = " +
-				Thread.currentThread().getId()
-			);
-			Thread.sleep(1000);
-		}
+		while (!serviceAFutureResult.isDone() || !serviceBFutureResult.isDone());
 
 		return Arrays.asList(serviceAFutureResult.get(), serviceBFutureResult.get());
 	}

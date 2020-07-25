@@ -1,7 +1,5 @@
 package com.exebar.poc.common;
 
-import java.util.Date;
-
 public abstract class AbstractService {
 
 	private String callName;
@@ -18,18 +16,15 @@ public abstract class AbstractService {
 	}
 
 	public void run() {
-		Long startTime = new Date().getTime();
+		System.out.printf(
+			"Simulating %d s call %s in thread with id = %d",
+			callDuration, callName, Thread.currentThread().getId()
+		);
 
-		while (new Date().getTime() - startTime < 1000 * callDuration) {
-			try {
-				System.out.println(
-					"Simulating " + callDuration + "s call " + callName +
-					" in thread with id = " + Thread.currentThread().getId()
-				);
-				Thread.sleep(2000);
-			} catch (InterruptedException ex) {
-				System.out.println(ex);
-			}
+		try {
+			Thread.sleep(1000 * callDuration);
+		} catch (InterruptedException ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 }
