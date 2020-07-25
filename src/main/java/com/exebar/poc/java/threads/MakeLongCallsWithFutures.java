@@ -1,6 +1,6 @@
 package com.exebar.poc.java.threads;
 
-import com.exebar.poc.common.LongCallServiceThatReturnsValue;
+import com.exebar.poc.common.ServiceThatReturnsValue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,10 +40,10 @@ public class MakeLongCallsWithFutures {
 
 	public static void main(String... args) throws Exception {
 		MakeLongCallsWithFutures test = new MakeLongCallsWithFutures(
-			new LongCallServiceThatReturnsValue<>(
+			new ServiceThatReturnsValue<>(
 				"callA()", "A", 5
 			),
-			new LongCallServiceThatReturnsValue<>(
+			new ServiceThatReturnsValue<>(
 				"callB()", "BB", 6
 			)
 		);
