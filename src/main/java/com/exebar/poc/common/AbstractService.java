@@ -2,9 +2,9 @@ package com.exebar.poc.common;
 
 public abstract class AbstractService {
 
-	private String callName;
+	private final String callName;
 
-	private int callDuration;
+	private final int callDuration;
 
 	AbstractService(String callName, int callDuration) {
 		this.callName = callName;
