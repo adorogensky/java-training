@@ -16,16 +16,17 @@ public class ServiceManager {
 
 	Callable<String> serviceB;
 
+	public final ExecutorService threadPool = Executors.newFixedThreadPool(2);
+
 	ServiceManager(Callable<String> serviceA, Callable<String> serviceB) {
 		this.serviceA = serviceA;
 		this.serviceB = serviceB;
 	}
 
 	List<String> run() throws InterruptedException, ExecutionException {
-		ExecutorService executorService = Executors.newFixedThreadPool(2);
 
-		Future<String> serviceAFutureResult = executorService.submit(serviceA);
-		Future<String> serviceBFutureResult = executorService.submit(serviceB);
+		Future<String> serviceAFutureResult = threadPool.submit(serviceA);
+		Future<String> serviceBFutureResult = threadPool.submit(serviceB);
 
 		while (!serviceAFutureResult.isDone() || !serviceBFutureResult.isDone()) {
 			System.out.println(
@@ -39,7 +40,7 @@ public class ServiceManager {
 	}
 
 	public static void main(String... args) throws Exception {
-		ServiceManager test = new ServiceManager(
+		ServiceManager serviceManager = new ServiceManager(
 			new ServiceThatReturnsValue<>(
 				"callA()", "A", 5
 			),
@@ -48,7 +49,7 @@ public class ServiceManager {
 			)
 		);
 
-		List<String> result = test.run();
+		List<String> result = serviceManager.run();
 
 		System.out.println(
 			"Result: " + Arrays.toString(
