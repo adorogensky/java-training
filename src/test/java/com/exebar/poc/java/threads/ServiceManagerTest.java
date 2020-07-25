@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MakeLongCallsWithFuturesTest {
+class ServiceManagerTest {
 
 	@Mock
 	private Callable<String> serviceA;
@@ -25,8 +25,8 @@ class MakeLongCallsWithFuturesTest {
 		when(serviceA.call()).thenReturn("A");
 		when(serviceB.call()).thenReturn("BB");
 
-		MakeLongCallsWithFutures makeLongCallsWithFutures = new MakeLongCallsWithFutures(serviceA, serviceB);
-		List<String> result = makeLongCallsWithFutures.run();
+		ServiceManager serviceManager = new ServiceManager(serviceA, serviceB);
+		List<String> result = serviceManager.run();
 
 		assertArrayEquals(new String[] {"A", "BB"}, result.toArray());
 	}
@@ -47,8 +47,8 @@ class MakeLongCallsWithFuturesTest {
 			}
 		);
 
-		MakeLongCallsWithFutures makeLongCallsWithFutures = new MakeLongCallsWithFutures(serviceA, serviceB);
-		List<String> result = makeLongCallsWithFutures.run();
+		ServiceManager serviceManager = new ServiceManager(serviceA, serviceB);
+		List<String> result = serviceManager.run();
 
 		assertArrayEquals(new String[] {"A", "BB"}, result.toArray());
 	}

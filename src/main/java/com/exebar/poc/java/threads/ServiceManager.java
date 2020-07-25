@@ -10,13 +10,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class MakeLongCallsWithFutures {
+public class ServiceManager {
 
 	Callable<String> serviceA;
 
 	Callable<String> serviceB;
 
-	MakeLongCallsWithFutures(Callable<String> serviceA, Callable<String> serviceB) {
+	ServiceManager(Callable<String> serviceA, Callable<String> serviceB) {
 		this.serviceA = serviceA;
 		this.serviceB = serviceB;
 	}
@@ -39,7 +39,7 @@ public class MakeLongCallsWithFutures {
 	}
 
 	public static void main(String... args) throws Exception {
-		MakeLongCallsWithFutures test = new MakeLongCallsWithFutures(
+		ServiceManager test = new ServiceManager(
 			new ServiceThatReturnsValue<>(
 				"callA()", "A", 5
 			),
