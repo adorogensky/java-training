@@ -2,7 +2,7 @@ package com.exebar.poc.common;
 
 import java.util.concurrent.Callable;
 
-public class LongCallServiceThatReturnsValue<ResultType> extends LongCallService implements Callable<ResultType> {
+public class LongCallServiceThatReturnsValue<ResultType> extends AbstractService implements Callable<ResultType> {
 
 	private ResultType callResult;
 

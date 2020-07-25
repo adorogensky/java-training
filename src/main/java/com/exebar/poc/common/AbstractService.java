@@ -2,13 +2,13 @@ package com.exebar.poc.common;
 
 import java.util.Date;
 
-public abstract class LongCallService {
+public abstract class AbstractService {
 
 	private String callName;
 
 	private int callDuration;
 
-	LongCallService(String callName, int callDuration) {
+	AbstractService(String callName, int callDuration) {
 		this.callName = callName;
 		this.callDuration = callDuration;
 	}

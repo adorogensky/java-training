@@ -1,6 +1,6 @@
 package com.exebar.poc.common;
 
-public class LongCallServiceNoReturnValue extends LongCallService implements Runnable {
+public class LongCallServiceNoReturnValue extends AbstractService implements Runnable {
 
 	public LongCallServiceNoReturnValue(String callName, int callDuration) {
 		super(callName, callDuration);
