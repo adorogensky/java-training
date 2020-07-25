@@ -1,10 +1,13 @@
 package com.exebar.poc.java.threads;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -20,19 +23,27 @@ class ServiceManagerTest {
 	@Mock
 	private Callable<String> serviceB;
 
+	LocalTime testStartTime;
+
+	@BeforeEach
+	public void setUp() {
+		testStartTime = LocalTime.now();
+	}
+
 	@Test
-	void testFastCalls() throws Exception {
+	void testFastServiceCalls() throws Exception {
 		when(serviceA.call()).thenReturn("A");
 		when(serviceB.call()).thenReturn("BB");
 
 		ServiceManager serviceManager = new ServiceManager(serviceA, serviceB);
 		List<String> result = serviceManager.run();
 
+		System.out.printf("Elapsed time: %d ms\n", Duration.between(testStartTime, LocalTime.now()).toMillis());
 		assertArrayEquals(new String[] {"A", "BB"}, result.toArray());
 	}
 
 	@Test
-	void testLongCalls() throws Exception {
+	void testLongServiceCalls() throws Exception {
 		when(serviceA.call()).thenAnswer(
 			invocationOnMock -> {
 				Thread.sleep(5000);
@@ -50,6 +61,7 @@ class ServiceManagerTest {
 		ServiceManager serviceManager = new ServiceManager(serviceA, serviceB);
 		List<String> result = serviceManager.run();
 
+		System.out.printf("Elapsed time: %d ms\n", Duration.between(testStartTime, LocalTime.now()).toMillis());
 		assertArrayEquals(new String[] {"A", "BB"}, result.toArray());
 	}
 }
