@@ -24,11 +24,8 @@ public class ServiceManager {
 	}
 
 	List<String> run() throws InterruptedException, ExecutionException {
-
 		Future<String> serviceAFutureResult = threadPool.submit(serviceA);
 		Future<String> serviceBFutureResult = threadPool.submit(serviceB);
-
-		while (!serviceAFutureResult.isDone() || !serviceBFutureResult.isDone());
 
 		return Arrays.asList(serviceAFutureResult.get(), serviceBFutureResult.get());
 	}
