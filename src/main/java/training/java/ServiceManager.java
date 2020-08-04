@@ -1,6 +1,4 @@
-package com.exebar.poc.java.threads;
-
-import com.exebar.poc.common.ServiceThatReturnsValue;
+package training.java;
 
 import java.util.Arrays;
 import java.util.List;

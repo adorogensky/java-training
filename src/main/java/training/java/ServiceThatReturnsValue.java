@@ -1,4 +1,4 @@
-package com.exebar.poc.common;
+package training.java;
 
 import java.util.concurrent.Callable;
 

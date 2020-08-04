@@ -1,4 +1,4 @@
-package com.exebar.poc.common;
+package training.java;
 
 public class ServiceThatDoesNotReturnValue extends AbstractService implements Runnable {
 
