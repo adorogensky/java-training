@@ -2,11 +2,11 @@ package training.java;
 
 import java.util.concurrent.Callable;
 
-public class ServiceThatReturnsValue<ResultType> extends AbstractService implements Callable<ResultType> {
+public class ServiceFunction<ResultType> extends AbstractService implements Callable<ResultType> {
 
 	private ResultType callResult;
 
-	public ServiceThatReturnsValue(String callName, ResultType callResult, int callDuration) {
+	public ServiceFunction(String callName, ResultType callResult, int callDuration) {
 		super(callName, callDuration);
 		this.callResult = callResult;
 	}

@@ -1,8 +1,8 @@
 package training.java;
 
-public class ServiceThatDoesNotReturnValue extends AbstractService implements Runnable {
+public class ServiceProcedure extends AbstractService implements Runnable {
 
-	public ServiceThatDoesNotReturnValue(String callName, int callDuration) {
+	public ServiceProcedure(String callName, int callDuration) {
 		super(callName, callDuration);
 	}
 

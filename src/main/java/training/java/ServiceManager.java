@@ -30,10 +30,10 @@ public class ServiceManager {
 
 	public static void main(String... args) throws Exception {
 		ServiceManager serviceManager = new ServiceManager(
-			new ServiceThatReturnsValue<>(
+			new ServiceFunction<>(
 				"callA()", "A", 5
 			),
-			new ServiceThatReturnsValue<>(
+			new ServiceFunction<>(
 				"callB()", "BB", 6
 			)
 		);
