@@ -8,13 +8,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class ServiceManager<ResultType> {
+public class AsyncServiceOrchestrator<ResultType> {
 
-	private ServiceFunction<ResultType>[] services;
+	private Service<ResultType>[] services;
 
 	public final ExecutorService threadPool;
 
-	public ServiceManager(ServiceFunction<ResultType>... services) {
+	public AsyncServiceOrchestrator(Service<ResultType>... services) {
 		this.services = services;
 		threadPool = Executors.newFixedThreadPool(services.length);
 	}

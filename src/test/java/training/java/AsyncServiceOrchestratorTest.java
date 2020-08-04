@@ -9,19 +9,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ServiceManagerTest {
+class AsyncServiceOrchestratorTest {
 
 	@Mock
-	private ServiceFunction<String> serviceA;
+	private Service<String> serviceA;
 
 	@Mock
-	private ServiceFunction<String> serviceB;
+	private Service<String> serviceB;
 
 	LocalTime testStartTime;
 
@@ -35,8 +34,8 @@ class ServiceManagerTest {
 		when(serviceA.call()).thenReturn("A");
 		when(serviceB.call()).thenReturn("BB");
 
-		ServiceManager<String> serviceManager = new ServiceManager(serviceA, serviceB);
-		List<String> result = serviceManager.run();
+		AsyncServiceOrchestrator<String> asyncServiceOrchestrator = new AsyncServiceOrchestrator(serviceA, serviceB);
+		List<String> result = asyncServiceOrchestrator.run();
 
 		System.out.println("Call A delay: none");
 		System.out.println("Call B delay: none");
@@ -63,8 +62,8 @@ class ServiceManagerTest {
 			}
 		);
 
-		ServiceManager<String> serviceManager = new ServiceManager(serviceA, serviceB);
-		List<String> result = serviceManager.run();
+		AsyncServiceOrchestrator<String> asyncServiceOrchestrator = new AsyncServiceOrchestrator(serviceA, serviceB);
+		List<String> result = asyncServiceOrchestrator.run();
 
 		System.out.printf("Call A delay: %ss\n", callADelay);
 		System.out.printf("Call B delay: %ss\n", callBDelay);
