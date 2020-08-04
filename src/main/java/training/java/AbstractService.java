@@ -4,11 +4,11 @@ public abstract class AbstractService {
 
 	private final String callName;
 
-	private final int callDuration;
+	private final int callDurationInSeconds;
 
-	AbstractService(String callName, int callDuration) {
+	public AbstractService(String callName, int callDurationInSeconds) {
 		this.callName = callName;
-		this.callDuration = callDuration;
+		this.callDurationInSeconds = callDurationInSeconds;
 	}
 
 	String getCallName() {
@@ -18,12 +18,13 @@ public abstract class AbstractService {
 	public void run() {
 		System.out.printf(
 			"Simulating %d s call %s in thread with id = %d",
-			callDuration, callName, Thread.currentThread().getId()
+				callDurationInSeconds, callName, Thread.currentThread().getId()
 		);
 
 		try {
-			Thread.sleep(1000 * callDuration);
+			Thread.sleep(1000 * callDurationInSeconds);
 		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
 			throw new RuntimeException(ex);
 		}
 	}
