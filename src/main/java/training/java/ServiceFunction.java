@@ -4,21 +4,21 @@ import java.util.concurrent.Callable;
 
 public class ServiceFunction<ResultType> extends AbstractService implements Callable<ResultType> {
 
-	private ResultType callResult;
+	private ResultType result;
 
-	public ServiceFunction(String callName, ResultType callResult, int callDuration) {
-		super(callName, callDuration);
-		this.callResult = callResult;
+	public ServiceFunction(String callName, ResultType result, int callDurationInSeconds) {
+		super(callName, callDurationInSeconds);
+		this.result = result;
 	}
 
 	public ResultType call() {
 		run();
 
-		System.out.println(
-			getCallName() + " is completed with a callResult " +
-			callResult + " in thread with id = " + Thread.currentThread().getId()
+		System.out.printf(
+			"%s is completed with a result %s in thread with id = %d\n",
+			getCallName(), result, Thread.currentThread().getId()
 		);
 
-		return callResult;
+		return result;
 	}
 }
