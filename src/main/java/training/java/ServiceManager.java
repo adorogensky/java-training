@@ -1,52 +1,40 @@
 package training.java;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
-public class ServiceManager {
+public class ServiceManager<ResultType> {
 
-	Callable<String> serviceA;
+	private ServiceFunction<ResultType>[] services;
 
-	Callable<String> serviceB;
+	public final ExecutorService threadPool;
 
-	public final ExecutorService threadPool = Executors.newFixedThreadPool(2);
-
-	ServiceManager(Callable<String> serviceA, Callable<String> serviceB) {
-		this.serviceA = serviceA;
-		this.serviceB = serviceB;
+	public ServiceManager(ServiceFunction<ResultType>... services) {
+		this.services = services;
+		threadPool = Executors.newFixedThreadPool(services.length);
 	}
 
-	List<String> run() throws InterruptedException, ExecutionException {
-		Future<String> serviceAFutureResult = threadPool.submit(serviceA);
-		Future<String> serviceBFutureResult = threadPool.submit(serviceB);
+	List<ResultType> run() {
+		List<Future<ResultType>> futures = Arrays.stream(services).map(
+			threadPool::submit
+		).collect(Collectors.toList());
 
-		return Arrays.asList(serviceAFutureResult.get(), serviceBFutureResult.get());
-	}
-
-	public static void main(String... args) throws Exception {
-		ServiceManager serviceManager = new ServiceManager(
-			new ServiceFunction<>(
-				"callA()", "A", 5
-			),
-			new ServiceFunction<>(
-				"callB()", "BB", 6
-			)
-		);
-
-		List<String> result = serviceManager.run();
-
-		System.out.println(
-			"Result: " + Arrays.toString(
-				new String[] {
-					result.get(0),
-					result.get(1)
+		List<ResultType> result = new ArrayList<>();
+		futures.forEach(
+			future -> {
+				try {
+					result.add(future.get());
+				} catch (Exception ex) {
+					throw new RuntimeException(ex);
 				}
-			)
+			}
 		);
+
+		return result;
 	}
 }

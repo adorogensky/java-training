@@ -18,10 +18,10 @@ import static org.mockito.Mockito.when;
 class ServiceManagerTest {
 
 	@Mock
-	private Callable<String> serviceA;
+	private ServiceFunction<String> serviceA;
 
 	@Mock
-	private Callable<String> serviceB;
+	private ServiceFunction<String> serviceB;
 
 	LocalTime testStartTime;
 
@@ -31,37 +31,44 @@ class ServiceManagerTest {
 	}
 
 	@Test
-	void testFastServiceCalls() throws Exception {
+	void testShortRunningServiceCalls() {
 		when(serviceA.call()).thenReturn("A");
 		when(serviceB.call()).thenReturn("BB");
 
-		ServiceManager serviceManager = new ServiceManager(serviceA, serviceB);
+		ServiceManager<String> serviceManager = new ServiceManager(serviceA, serviceB);
 		List<String> result = serviceManager.run();
 
-		System.out.printf("Elapsed time: %d ms\n", Duration.between(testStartTime, LocalTime.now()).toMillis());
+		System.out.println("Call A delay: none");
+		System.out.println("Call B delay: none");
+		System.out.printf("Aggregate call elapsed time: %d ms\n", Duration.between(testStartTime, LocalTime.now()).toMillis());
 		assertArrayEquals(new String[] {"A", "BB"}, result.toArray());
 	}
 
 	@Test
-	void testLongServiceCalls() throws Exception {
+	void testLongRunningServiceCalls() {
+		int callADelay = 2;
+		int callBDelay = 3;
+
 		when(serviceA.call()).thenAnswer(
 			invocationOnMock -> {
-				Thread.sleep(5000);
+				Thread.sleep(callADelay * 1000);
 				return "A";
 			}
 		);
 
 		when(serviceB.call()).thenAnswer(
 			invocationOnMock -> {
-				Thread.sleep(7000);
+				Thread.sleep(callBDelay * 1000);
 				return "BB";
 			}
 		);
 
-		ServiceManager serviceManager = new ServiceManager(serviceA, serviceB);
+		ServiceManager<String> serviceManager = new ServiceManager(serviceA, serviceB);
 		List<String> result = serviceManager.run();
 
-		System.out.printf("Elapsed time: %d ms\n", Duration.between(testStartTime, LocalTime.now()).toMillis());
+		System.out.printf("Call A delay: %ss\n", callADelay);
+		System.out.printf("Call B delay: %ss\n", callBDelay);
+		System.out.printf("Aggregate call elapsed time: %d ms\n", Duration.between(testStartTime, LocalTime.now()).toMillis());
 		assertArrayEquals(new String[] {"A", "BB"}, result.toArray());
 	}
 }
