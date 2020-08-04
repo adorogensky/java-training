@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HashMapTests {
+public class HashMapWritePerformanceTests {
 
     private int maxPermCount = 1_000_000;
 
@@ -34,7 +34,7 @@ public class HashMapTests {
     }
 
     @Test
-    public void benchmark_HashMap_vs_synchronizedHashMap_writePerformance() {
+    public void test_HashMap_vs_synchronizedHashMap() {
         int hashMapWriteTime = 0;
         int maxAttemps = 1;
 
