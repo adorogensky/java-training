@@ -1,4 +1,4 @@
-package training.java;
+package training.java.threads;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package training.java;
+package training.java.date;
 
 import org.junit.jupiter.api.Test;
 
