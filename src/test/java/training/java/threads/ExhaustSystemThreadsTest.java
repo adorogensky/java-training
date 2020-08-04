@@ -8,7 +8,8 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.concurrent.*;
 
-public class ThreadPoolExecutorTests {
+@Disabled
+public class ExhaustSystemThreadsTest {
 
     /*
         TODO: How is this max thread limit calculated?
@@ -17,7 +18,6 @@ public class ThreadPoolExecutorTests {
         TODO: Why is this limit different when running from toolbox vs running from intellij?
      */
     @Test
-    @Disabled
     public void testMaxThreads() {
         LocalTime startTime = LocalTime.now();
 
