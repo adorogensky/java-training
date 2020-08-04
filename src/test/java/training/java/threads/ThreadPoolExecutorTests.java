@@ -1,6 +1,7 @@
 package training.java.threads;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -16,7 +17,7 @@ public class ThreadPoolExecutorTests {
         TODO: Why is this limit different when running from toolbox vs running from intellij?
      */
     @Test
-    @Ignore
+    @Disabled
     public void testMaxThreads() {
         LocalTime startTime = LocalTime.now();
 
