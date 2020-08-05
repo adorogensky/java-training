@@ -1,5 +1,7 @@
 package training.java;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,19 +10,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class AsyncServiceOrchestrator<ResultType> {
+public class ParallelTaskRunner<ResultType> {
 
-	private Service<ResultType>[] services;
+	private DelayedTaskStub<ResultType>[] tasks;
 
 	public final ExecutorService threadPool;
 
-	public AsyncServiceOrchestrator(Service<ResultType>... services) {
-		this.services = services;
-		threadPool = Executors.newFixedThreadPool(services.length);
+	@SafeVarargs
+	public ParallelTaskRunner(DelayedTaskStub<ResultType>... tasks) {
+		this.tasks = tasks;
+		threadPool = Executors.newFixedThreadPool(tasks.length);
 	}
 
 	List<ResultType> run() {
-		List<Future<ResultType>> futures = Arrays.stream(services).map(
+		LocalTime startTime = LocalTime.now();
+		List<Future<ResultType>> futures = Arrays.stream(tasks).map(
 			threadPool::submit
 		).collect(Collectors.toList());
 
@@ -33,6 +37,12 @@ public class AsyncServiceOrchestrator<ResultType> {
 					throw new RuntimeException(ex);
 				}
 			}
+		);
+
+		System.out.printf(
+			"[Thread ID = %d] All tasks took %d ms to complete parallelly\n",
+			Thread.currentThread().getId(),
+			Duration.between(startTime, LocalTime.now()).toMillis()
 		);
 
 		return result;
