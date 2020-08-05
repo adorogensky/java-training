@@ -4,7 +4,11 @@ import org.junit.jupiter.api.Test;
 import training.DelayedTaskStub;
 import training.ParallelTaskRunner;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ParallelTaskRunnerTests {
 
@@ -12,6 +16,12 @@ class ParallelTaskRunnerTests {
 
 	private DelayedTaskStub<String> taskB;
 
+	@SafeVarargs
+	private final List<String> getTaskResults(DelayedTaskStub<String>... tasks) {
+		return Stream.of(tasks).map(
+			DelayedTaskStub::getResult
+		).collect(Collectors.toList());
+	}
 	@Test
 	void testShortRunningTasks() {
 		taskA = new DelayedTaskStub<>("A", "A", 0);
@@ -19,7 +29,7 @@ class ParallelTaskRunnerTests {
 
 		ParallelTaskRunner<String> taskRunner = new ParallelTaskRunner<>(taskA, taskB);
 
-		assertArrayEquals(new String[] { taskA.getResult(), taskB.getResult() }, taskRunner.run().toArray());
+		assertEquals(getTaskResults(taskA, taskB), taskRunner.run());
 	}
 
 	@Test
@@ -29,6 +39,6 @@ class ParallelTaskRunnerTests {
 
 		ParallelTaskRunner<String> taskRunner = new ParallelTaskRunner<>(taskA, taskB);
 
-		assertArrayEquals(new String[] { taskA.getResult(), taskB.getResult() }, taskRunner.run().toArray());
+		assertEquals(getTaskResults(taskA, taskB), taskRunner.run());
 	}
 }
