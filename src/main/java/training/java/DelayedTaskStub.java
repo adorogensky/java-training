@@ -4,6 +4,9 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.concurrent.Callable;
 
+/*
+	Simulates task execution with a given result that takes a certain time.
+ */
 public class DelayedTaskStub<ResultType> implements Callable<ResultType> {
 
 	private final String name;
@@ -21,7 +24,7 @@ public class DelayedTaskStub<ResultType> implements Callable<ResultType> {
 	public String getName() {
 		return name;
 	}
-	
+
 	public ResultType getResult() {
 		return result;
 	}
