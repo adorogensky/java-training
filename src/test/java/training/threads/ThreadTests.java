@@ -46,6 +46,9 @@ public class ThreadTests {
         System.out.println("Thread state after it is finished: " + t.getState());
     }
 
+    /*
+        BLOCKED
+     */
     @Test
     public void testThreadStates_beforeSynchronizedBlock() throws Exception {
         Thread t = new Thread(
@@ -63,6 +66,9 @@ public class ThreadTests {
         }
     }
 
+    /*
+        WAITING
+     */
     @Test
     public void testThreadStates_beforeReentrantLock_lock() throws Exception {
         final Lock monitor = new ReentrantLock();
@@ -74,6 +80,56 @@ public class ThreadTests {
         Thread.sleep(100);
         System.out.printf(
             "Thread state before ReentrantLock.lock(): %s\n", t.getState()
+        );
+    }
+
+    /*
+        WAITING
+     */
+    @Test
+    public void testThreadStates_beforeWait() throws Exception {
+        Thread t = new Thread(
+            () -> {
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        );
+
+        t.start();
+        Thread.sleep(100);
+        System.out.printf(
+            "Thread state before wait(): %s\n", t.getState()
+        );
+    }
+
+    /*
+      TIMED_WAITING
+     */
+    @Test
+    public void testThreadStates_beforeTimedWait() throws Exception {
+        Thread t = new Thread(
+            () -> {
+                synchronized (this) {
+                    try {
+                        this.wait(500);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        );
+
+        t.start();
+        Thread.sleep(100);
+        System.out.printf(
+            "Thread state before wait(): %s\n", t.getState()
         );
     }
 }
