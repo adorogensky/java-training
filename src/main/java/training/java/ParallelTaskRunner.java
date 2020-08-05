@@ -10,6 +10,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
+/**
+ * Runs tasks parallelly and returns an array of task results
+ * in the order the tasks were passed to the constructor
+ * @param <ResultType>
+ */
 public class ParallelTaskRunner<ResultType> {
 
 	private DelayedTaskStub<ResultType>[] tasks;
