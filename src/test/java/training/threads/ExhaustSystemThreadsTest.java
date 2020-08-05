@@ -1,4 +1,4 @@
-package training.java.threads;
+package training.threads;
 
 
 import org.junit.jupiter.api.Disabled;

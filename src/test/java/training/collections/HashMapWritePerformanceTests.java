@@ -1,4 +1,4 @@
-package training.java.collections;
+package training.collections;
 
 import org.junit.jupiter.api.Test;
 

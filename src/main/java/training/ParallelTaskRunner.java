@@ -1,4 +1,4 @@
-package training.java;
+package training;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -27,7 +27,7 @@ public class ParallelTaskRunner<ResultType> {
 		threadPool = Executors.newFixedThreadPool(tasks.length);
 	}
 
-	List<ResultType> run() {
+	public List<ResultType> run() {
 		LocalTime startTime = LocalTime.now();
 		List<Future<ResultType>> futures = Arrays.stream(tasks).map(
 			threadPool::submit

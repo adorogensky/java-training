@@ -1,6 +1,9 @@
-package training.java;
+package training.threads;
 
 import org.junit.jupiter.api.Test;
+import training.DelayedTaskStub;
+import training.ParallelTaskRunner;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ParallelTaskRunnerTests {
