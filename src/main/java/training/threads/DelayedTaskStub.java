@@ -1,4 +1,4 @@
-package training;
+package training.threads;
 
 import java.time.Duration;
 import java.time.LocalTime;

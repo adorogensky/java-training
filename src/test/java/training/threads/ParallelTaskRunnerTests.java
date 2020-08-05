@@ -1,8 +1,6 @@
 package training.threads;
 
 import org.junit.jupiter.api.Test;
-import training.DelayedTaskStub;
-import training.ParallelTaskRunner;
 
 import java.util.List;
 import java.util.stream.Collectors;
