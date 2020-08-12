@@ -46,6 +46,18 @@ class IntStreamTests {
         Arrays.stream(inversions).flatMapToInt(Arrays::stream).forEach(System.out::println);
     }
 
+    private int factorial(int n) {
+        return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
+    }
+
+    @Test
+    void testReduce() {
+        assertEquals(1, factorial(1));
+        assertEquals(2, factorial(2));
+        assertEquals(6, factorial(3));
+        assertEquals(24, factorial(4));
+    }
+
     @Test
     void testDistinct() {
         assertEquals(numbers.length, IntStream.of(numbers).distinct().count());
@@ -61,16 +73,6 @@ class IntStreamTests {
         assertEquals(1, IntStream.of(numbers).min().getAsInt());
     }
 
-    @Test
-    void testReduce() {
-        assertEquals(2, factorial(2));
-        assertEquals(6, factorial(3));
-        assertEquals(24, factorial(4));
-    }
-
-    private int factorial(int n) {
-        return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
-    }
 
     @Test
     void testNoneAnyAllMatch() {
@@ -146,9 +148,9 @@ class IntStreamTests {
 
     @Test
     void combineWordsIntoSentence() {
-        String[] words = { "hello", "world" };
+        String[] words = { "hello", "this", "world" };
         assertEquals(
-            "hello world.",
+            "hello this world.",
             Arrays.stream(words).collect(Collectors.joining(" ", "", "."))
         );
     }

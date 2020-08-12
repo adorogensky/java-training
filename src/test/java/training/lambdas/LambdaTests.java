@@ -2,8 +2,8 @@ package training.lambdas;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.ToIntBiFunction;
+import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
 
 class LambdaTests {
@@ -36,26 +36,26 @@ class LambdaTests {
     @Test
     void testOneParameterLambdaFunctionsThatReturnValue() {
         Stream.of(
-            (Function<Integer, Integer>) (Integer i) -> { return i * i; },
+            (ToIntFunction<Integer>) (Integer i) -> { return i * i; },
             (Integer i) -> { return i * i; },
             (Integer i) -> i * i,
             (i) -> { return i * i; },
             (i) -> i * i,
             i -> i * i
         ).forEach(
-            squared -> System.out.printf("5 * 5 = %2d\n", squared.apply(5))
+            squared -> System.out.printf("5 * 5 = %2d\n", squared.applyAsInt(5))
         );
     }
 
     @Test
     void testTwoParametersLambdaFunctionsThatReturnValue() {
         Stream.of(
-            (BiFunction<Integer, Integer, Integer>) (i, j) -> i + j,
+            (ToIntBiFunction<Integer, Integer>) (i, j) -> i + j,
             (i, j) -> i + j,
             Integer::sum,
             (Integer i, Integer j) -> i + j
         ).forEach(
-            sum -> System.out.printf("2 + 3 = %2d\n", sum.apply(2, 3))
+            sum -> System.out.printf("2 + 3 = %2d\n", sum.applyAsInt(2, 3))
         );
     }
 }
