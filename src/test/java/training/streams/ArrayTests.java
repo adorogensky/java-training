@@ -29,41 +29,40 @@ class ArrayTests {
     private final int [][] inversions = { { 1, 2 }, { 5, 8 }, { 9, 11 } };
 
     @Test
-    void processAndPrintNumbers() {
+    void testMapAndForEach() {
         IntStream.of(numbers).map(x -> x / 2).forEach(System.out::println);
-
     }
 
     @Test
-    void processAndPrintNumbersWithDebuggingInfo() {
+    void testPeek() {
         IntStream.of(numbers).peek(
-            x -> System.out.println("original = " + x)
+            x -> System.out.print(x + " => ")
         ).map(x -> x / 2).forEach(System.out::println);
 
     }
 
     @Test
-    void printInversionIndexes() {
+    void testFlatMap() {
         Arrays.stream(inversions).flatMapToInt(Arrays::stream).forEach(System.out::println);
     }
 
     @Test
-    void countDistinctNumbers() {
+    void testDistinct() {
         assertEquals(numbers.length, IntStream.of(numbers).distinct().count());
     }
 
     @Test
-    void findMaxNumber() {
+    void testMax() {
         assertEquals(4, IntStream.of(numbers).max().getAsInt());
     }
 
     @Test
-    void findMinNumber() {
+    void testMin() {
         assertEquals(1, IntStream.of(numbers).min().getAsInt());
     }
 
     @Test
-    void calculateFactorials() {
+    void testReduce() {
         assertEquals(2, factorial(2));
         assertEquals(6, factorial(3));
         assertEquals(24, factorial(4));
@@ -74,30 +73,30 @@ class ArrayTests {
     }
 
     @Test
-    void matchNumbers() {
+    void testNoneAnyAllMatch() {
         assertTrue(IntStream.of(numbers).noneMatch(i -> i == 5));
         assertTrue(IntStream.of(numbers).anyMatch(i -> i == 4));
         assertTrue(IntStream.of(numbers).allMatch(i -> i < 5));
     }
 
     @Test
-    void printNumbers() {
+    void testIterate() {
         Stream.iterate(0, i -> i + 1).limit(numbers.length).forEach(
-                i -> System.out.println(numbers[i])
+            i -> System.out.println(numbers[i])
         );
 
         Stream.iterate(0, i -> i < numbers.length, i -> i + 1).forEach(
-                i -> System.out.println(numbers[i])
+            i -> System.out.println(numbers[i])
         );
     }
 
     @Test
-    void printFiveRandomNumbers() {
+    void testGenerate_printRandomIntegers() {
         Stream.generate(() -> new Random().nextInt(10)).limit(5).forEach(System.out::println);
     }
 
     @Test
-    void printFiveRandomUUIDs() {
+    void testGenerate_printRandomUUIDs() {
         Stream.generate(UUID::randomUUID).limit(5).forEach(System.out::println);
     }
 
@@ -105,10 +104,10 @@ class ArrayTests {
     void printFibbonaciNumbers() {
         // 0, 1 => 0, 1, 1 => 0, 1, 1, 2 => 0, 1, 1, 2, 3 => 0, 1, 1, 2, 3, 5
         Stream.iterate(
-                new int[] { 0, 1 },
-                twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
+            new int[] { 0, 1 },
+            twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
         ).limit(10).mapToInt(
-                twoNumbers -> twoNumbers[0]
+            twoNumbers -> twoNumbers[0]
         ).forEach(System.out::println);
     }
 
@@ -116,7 +115,7 @@ class ArrayTests {
     void printNumbersSeparatedBySpace() {
         List<Integer> numbersList = IntStream.of(numbers).boxed().collect(toList());
         LinkedList<Integer> numbersLinkedList = IntStream.of(numbers).boxed().collect(
-                toCollection(LinkedList::new)
+            toCollection(LinkedList::new)
         );
 
         assertTrue(numbersList.containsAll(numbersLinkedList));
@@ -131,9 +130,9 @@ class ArrayTests {
         String[] names = {"alex", "nancy", "john"};
 
         Stream.iterate(0, i -> i + 1).limit(names.length).collect(
-                toMap(Function.identity(), i -> names[i])
+            toMap(Function.identity(), i -> names[i])
         ).forEach(
-                (key, value) -> System.out.printf("(%d, %s)\n", key, value)
+            (key, value) -> System.out.printf("(%d, %s)\n", key, value)
         );
     }
 
@@ -141,7 +140,7 @@ class ArrayTests {
     void printNamesAndAppendUnknown() {
         String[] names = { "alex", "nancy", "john" };
         Arrays.stream(names).collect(
-                collectingAndThen(toList(), list -> { list.add("unknown"); return list; })
+            collectingAndThen(toList(), list -> { list.add("unknown"); return list; })
         ).forEach(System.out::println);
     }
 
@@ -149,8 +148,8 @@ class ArrayTests {
     void combineWordsIntoSentence() {
         String[] words = { "hello", "world" };
         assertEquals(
-                "hello world.",
-                Arrays.stream(words).collect(Collectors.joining(" ", "", "."))
+            "hello world.",
+            Arrays.stream(words).collect(Collectors.joining(" ", "", "."))
         );
     }
 
