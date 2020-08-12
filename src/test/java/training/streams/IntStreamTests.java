@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 // findFirst, findAny
 // takeWhile, dropWhile ???
 
-class ArrayTests {
+class IntStreamTests {
 
     private final int [] numbers = { 1, 2, 3, 4 };
 
