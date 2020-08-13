@@ -10,17 +10,21 @@ import java.util.stream.Stream;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.*;
+import static java.util.stream.Stream.concat;
 import static org.junit.jupiter.api.Assertions.*;
 
-// of(2), ofNullable, empty
-// map, mapToInt, mapToLong, mapToDouble
-// flatMap, flatMapToInt, flatMapToLong, flatMapToDouble
-// distinct, min, max, count, reduce(3)
-// anyMatch, allMatch, noneMatch
-// filter, sorted(2), peek
-// concat, generate, iterate, forEach, forEachOrdered, collect(3)
-// findFirst, findAny
-// takeWhile, dropWhile ???
+// + of, + concat
+// - asDoubleStream, - asLongStream, + boxed, - builder
+// + filter, + peek
+// + map, + mapToLong, + mapToDouble, + mapToObj
+// + flatMap (weird...)
+// +- reduce (2)
+// + distinct, + sorted, + min, + max, + count
+// + anyMatch, + allMatch, + noneMatch
+// + generate, ++ iterate(2), + forEach, forEachOrdered
+// - findFirst, - findAny
+// - takeWhile, - dropWhile
+// - collect
 
 class IntStreamTests {
 
@@ -29,8 +33,45 @@ class IntStreamTests {
     private final int [][] inversions = { { 1, 2 }, { 5, 8 }, { 9, 11 } };
 
     @Test
-    void testMapAndForEach() {
-        IntStream.of(numbers).map(x -> x / 2).forEach(System.out::println);
+    void testConcat() {
+        IntStream.concat(IntStream.of(1), IntStream.of(2, 3)).forEach(System.out::println);
+    }
+
+    @Test
+    void testFilter() {
+        IntStream.of(numbers).filter(
+            number -> number % 2 == 0
+        ).forEach(System.out::println);
+    }
+
+    @Test
+    void testMap() {
+        IntStream.of(numbers).map(
+            x -> x / 2
+        ).forEach(System.out::println);
+    }
+
+    @Test
+    void testMapToLong() {
+        assertArrayEquals(
+            new long[] { 1, 2, 3, 4 },
+            IntStream.of(numbers).mapToLong(
+                number -> number
+            ).toArray()
+        );
+    }
+
+    @Test
+    void testMapToDouble() {
+        // why is cast to double needed here?
+        IntStream.of(numbers).mapToDouble(
+            number -> (double) number / 2
+        ).forEach(System.out::println);
+    }
+
+    @Test
+    void testMapToObj() {
+        IntStream.of(numbers).mapToObj(x -> x + "s").forEach(System.out::println);
     }
 
     @Test
@@ -38,13 +79,20 @@ class IntStreamTests {
         IntStream.of(numbers).peek(
             x -> System.out.print(x + " => ")
         ).map(x -> x / 2).forEach(System.out::println);
-
     }
 
     @Test
     void testFlatMap() {
+        // this should go into StreamTests
         Arrays.stream(inversions).flatMapToInt(Arrays::stream).forEach(System.out::println);
+
+        // the name IntStream.flatMap() method is misleading
+        // because a stream of 'int' values is as flat as it gets
+        IntStream.of(numbers).flatMap(
+            number -> IntStream.of(number, number + 1)
+        ).forEach(System.out::println);
     }
+
 
     private int factorial(int n) {
         return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
@@ -60,7 +108,25 @@ class IntStreamTests {
 
     @Test
     void testDistinct() {
-        assertEquals(numbers.length, IntStream.of(numbers).distinct().count());
+        IntStream.of(1, 1, 2, 2, 4, 4, 4).distinct().forEach(System.out::println);
+    }
+
+    @Test
+    void testCount() {
+        assertEquals(4, IntStream.of(numbers).count());
+    }
+
+    @Test
+    void testSorted() {
+        assertArrayEquals(
+            new int[] { 1, 2, 5 },
+            IntStream.of(5, 1, 2).sorted().toArray()
+        );
+    }
+
+    @Test
+    void testMin() {
+        assertEquals(1, IntStream.of(numbers).min().orElseThrow(() -> new RuntimeException("empty stream")));
     }
 
     @Test
@@ -69,16 +135,18 @@ class IntStreamTests {
     }
 
     @Test
-    void testMin() {
-        assertEquals(1, IntStream.of(numbers).min().orElseThrow(() -> new RuntimeException("empty stream")));
+    void testAnyMatch() {
+        assertTrue(IntStream.of(numbers).anyMatch(i -> i == 4));
     }
 
+    @Test
+    void testAllMatch() {
+        assertTrue(IntStream.of(numbers).allMatch(i -> i < 5));
+    }
 
     @Test
-    void testNoneAnyAllMatch() {
+    void testNoneMatch() {
         assertTrue(IntStream.of(numbers).noneMatch(i -> i == 5));
-        assertTrue(IntStream.of(numbers).anyMatch(i -> i == 4));
-        assertTrue(IntStream.of(numbers).allMatch(i -> i < 5));
     }
 
     @Test
@@ -108,7 +176,7 @@ class IntStreamTests {
     void testCollect_toLinkedList() {
         List<Integer> numbersList = IntStream.of(numbers).boxed().collect(toList());
         LinkedList<Integer> numbersLinkedList = IntStream.of(numbers).boxed().collect(
-                toCollection(LinkedList::new)
+            toCollection(LinkedList::new)
         );
 
         assertTrue(numbersList.containsAll(numbersLinkedList));
@@ -194,10 +262,10 @@ class IntStreamTests {
         // 0, 1, 1, 1, 2, 3, 5
 
         Stream.iterate(
-                new int[] { 0, 1 },
-                twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
+            new int[] { 0, 1 },
+            twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
         ).limit(10).mapToInt(
-                twoNumbers -> twoNumbers[0]
+            twoNumbers -> twoNumbers[0]
         ).forEach(System.out::println);
     }
 
