@@ -3,38 +3,96 @@ package training.streams;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.*;
-import static java.util.stream.Stream.concat;
 import static org.junit.jupiter.api.Assertions.*;
 
-// + of, + concat
-// - asDoubleStream, - asLongStream, + boxed, - builder
-// + filter, + peek
-// + map, + mapToLong, + mapToDouble, + mapToObj
-// + flatMap (weird...)
+// + of, + range, + rangeClosed, + concat, + builder
+// + asLongStream, + asDoubleStream, + boxed
+// + generate, ++ iterate(2), + forEach, * forEachOrdered
+// + filter, + peek, + map, + mapToLong, + mapToDouble, + mapToObj
+// + flatMap
 // +- reduce (2)
-// + distinct, + sorted, + min, + max, + count
+// + distinct, + sorted, + min, + max, + count, + sum, + average
 // + anyMatch, + allMatch, + noneMatch
-// + generate, ++ iterate(2), + forEach, forEachOrdered
-// - findFirst, - findAny
-// - takeWhile, - dropWhile
+// + findFirst, + findAny
+// + takeWhile, + dropWhile
 // - collect
 
 class IntStreamTests {
 
     private final int [] numbers = { 1, 2, 3, 4 };
 
-    private final int [][] inversions = { { 1, 2 }, { 5, 8 }, { 9, 11 } };
-
     @Test
     void testConcat() {
-        IntStream.concat(IntStream.of(1), IntStream.of(2, 3)).forEach(System.out::println);
+        IntStream.concat(IntStream.of(0), IntStream.of(numbers)).forEach(System.out::println);
+    }
+
+    @Test
+    void testRange() {
+        IntStream.range(1, 11).forEach(System.out::println);
+    }
+
+    @Test
+    void testRangeClosed() {
+        IntStream.rangeClosed(1, 10).forEach(System.out::println);
+    }
+
+    @Test
+    // what is a good use case for IntStream.builder() ?
+    void testBuilder() {
+        IntStream.builder().add(1).add(2).add(3).build().forEach(System.out::println);
+    }
+
+    @Test
+    void testAsLongStream() {
+        assertArrayEquals(
+            new long[] { 1, 2, 3, 4 },
+            IntStream.of(numbers).asLongStream().toArray()
+        );
+    }
+
+    @Test
+    void testAsDoubleStream() {
+        assertArrayEquals(
+            new double[] { 1, 2, 3, 4 },
+            IntStream.of(numbers).asDoubleStream().toArray()
+        );
+    }
+
+    @Test
+    void testBoxed() {
+        assertEquals(
+            Arrays.asList(1, 2, 3, 4),
+            IntStream.of(numbers).boxed().collect(toList())
+        );
+    }
+
+    @Test
+    void testGenerate() {
+        Stream.generate(UUID::randomUUID).limit(5).forEach(System.out::println);
+    }
+
+    @Test
+    void testIterate() {
+        IntStream.iterate(0, i -> i + 2).limit(6).forEach(System.out::println);
+    }
+
+    /*
+        Since Java 9
+     */
+    @Test
+    void testIterate9() {
+        IntStream.iterate(0, i -> i <= 10, i -> i + 2).forEach(System.out::println);
+    }
+
+    // this case doesn't seem to depend forEachOrdered()
+    // what is a good use case for IntStream.builder() ?
+    @Test
+    void testForEachOrdered() {
+        Stream.of(1, 2, 3).sorted(Comparator.reverseOrder()).forEachOrdered(System.out::println);
     }
 
     @Test
@@ -83,16 +141,12 @@ class IntStreamTests {
 
     @Test
     void testFlatMap() {
-        // this should go into StreamTests
-        Arrays.stream(inversions).flatMapToInt(Arrays::stream).forEach(System.out::println);
+        IntStream.of(1, 3, 5).flatMap(
+            number -> Integer.toBinaryString(number).codePoints().map(c -> c == '1' ? 1 : 0)
+        ).forEach(System.out::print);
 
-        // the name IntStream.flatMap() method is misleading
-        // because a stream of 'int' values is as flat as it gets
-        IntStream.of(numbers).flatMap(
-            number -> IntStream.of(number, number + 1)
-        ).forEach(System.out::println);
+        System.out.println();
     }
-
 
     private int factorial(int n) {
         return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
@@ -114,6 +168,16 @@ class IntStreamTests {
     @Test
     void testCount() {
         assertEquals(4, IntStream.of(numbers).count());
+    }
+
+    @Test
+    void testSum() {
+        assertEquals(1 + 2 + 3 + 4, IntStream.of(numbers).sum());
+    }
+
+    @Test
+    void testAverage() {
+        assertEquals((double) (1 + 2 + 3 + 4) / 4, IntStream.of(numbers).average().orElse(0));
     }
 
     @Test
@@ -149,112 +213,22 @@ class IntStreamTests {
         assertTrue(IntStream.of(numbers).noneMatch(i -> i == 5));
     }
 
+    /* Since Java 9 */
     @Test
-    void testIterate() {
-        IntStream.iterate(0, i -> i + 1).limit(numbers.length).forEach(
-            i -> System.out.print(numbers[i] + " ")
-        );
-
-        System.out.println();
-
-        IntStream.iterate(0, i -> i < numbers.length, i -> i + 1).forEach(
-            i -> System.out.print(numbers[i] + " ")
-        );
-    }
-
-    @Test
-    void testGenerate_printRandomIntegers() {
-        IntStream.generate(() -> new Random().nextInt(10)).limit(5).forEach(System.out::println);
-    }
-
-    @Test
-    void testGenerate_printRandomUUIDs() {
-        Stream.generate(UUID::randomUUID).limit(5).forEach(System.out::println);
-    }
-
-    @Test
-    void testCollect_toLinkedList() {
-        List<Integer> numbersList = IntStream.of(numbers).boxed().collect(toList());
-        LinkedList<Integer> numbersLinkedList = IntStream.of(numbers).boxed().collect(
-            toCollection(LinkedList::new)
-        );
-
-        assertTrue(numbersList.containsAll(numbersLinkedList));
-        assertTrue(numbersLinkedList.containsAll(numbersList));
-    }
-
-    @Test
-    void testCollect_joining() {
-        assertEquals("1 2 3 4", IntStream.of(numbers).mapToObj(i -> "" + i).collect(joining(" ")));
-        assertEquals("1 2 3 4", IntStream.of(numbers).mapToObj(i -> "" + i).reduce("", (x, y) -> x + " " + y).trim());
-    }
-
-    @Test
-    void testCollect_toMap() {
-        String[] names = {"alex", "nancy", "john"};
-        Stream.iterate(0, i -> i + 1).limit(names.length).collect(
-            toMap(Function.identity(), i -> names[i])
-        ).forEach(
-            (key, value) -> System.out.printf("(%d, %s)\n", key, value)
-        );
-    }
-
-    @Test
-    void testCollect_toMap_merge() {
-        String[] names = {"alex", "nancy", "john"};
-
-        Map<Integer, List<String>> namesByLength = Arrays.stream(names).collect(
-            toMap(
-                String::length,
-                Arrays::asList,
-                (oldValue, newValue) ->
-                    Stream.of(oldValue, newValue).flatMap(Collection::stream).collect(toList())
-            )
-        );
-
-        assertEquals(2, namesByLength.keySet().size());
-        assertEquals(asList("alex", "john"), namesByLength.get(4));
-        assertEquals(singletonList("nancy"), namesByLength.get(5));
-    }
-
-    @Test
-    void testCollectingAndThen() {
-        String[] names = { "alex", "nancy", "john" };
-        Arrays.stream(names).collect(
-            collectingAndThen(toList(), list -> { list.add("unknown"); return list; })
+    void testTakeWhile() {
+        IntStream.of(2, 2, 1, 3, 6, 2, 2, 5).takeWhile(
+            number -> number % 2 == 0
         ).forEach(System.out::println);
     }
 
+    /* Since Java 9 */
     @Test
-    void testJoining() {
-        String[] words = { "hello", "this", "world" };
-        assertEquals(
-            "hello this world.",
-            Arrays.stream(words).collect(joining(" ", "", "."))
-        );
+    void dropTakeWhile() {
+        IntStream.of(2, 2, 1, 3, 6, 2, 2, 5).dropWhile(
+            number -> number % 2 == 0
+        ).forEach(System.out::println);
     }
 
-//    @Test
-//    void testMapping() {
-//        IntStream.of(numbers).collect(toList());
-//    }
-
-
-    @Test
-    void testSummarizingDouble() {
-        DoubleSummaryStatistics statistics = IntStream.of(numbers).boxed().collect(summarizingDouble(x -> x));
-        assertEquals(1, statistics.getMin());
-        assertEquals(4, statistics.getMax());
-        assertEquals(4, statistics.getCount());
-        assertEquals(10, statistics.getSum());
-        assertEquals(2.5, statistics.getAverage());
-
-        assertEquals(1, IntStream.of(numbers).boxed().collect(minBy(Comparator.naturalOrder())).get());
-        assertEquals(4, IntStream.of(numbers).boxed().collect(maxBy(Comparator.naturalOrder())).get());
-        assertEquals(4, IntStream.of(numbers).boxed().collect(counting()));
-        assertEquals(10, IntStream.of(numbers).boxed().collect(summingInt(x -> x)));
-        assertEquals(2.5, IntStream.of(numbers).boxed().collect(averagingDouble(x -> x)));
-    }
 
     @Test
     void printFibbonaciNumbers() {
