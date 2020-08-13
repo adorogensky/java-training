@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // + of, + range, + rangeClosed, + concat, + builder
 // + asLongStream, + asDoubleStream, + boxed
-// + generate, ++ iterate(2), + forEach, * forEachOrdered
+// + generate, ++ iterate(2), + forEach, ? forEachOrdered
 // + filter, + peek, + map, + mapToLong, + mapToDouble, + mapToObj
 // + flatMap
-// +- reduce (2)
+// ++ reduce (2)
 // + distinct, + sorted, + min, + max, + count, + sum, + average
 // + anyMatch, + allMatch, + noneMatch
 // + findFirst, + findAny
@@ -148,12 +148,22 @@ class IntStreamTests {
         System.out.println();
     }
 
+    @Test
+    void testReduce_noIdentity() {
+        assertEquals(1 + 2 + 3 + 4, IntStream.of(1, 2, 3, 4).reduce(Integer::sum).orElse(0));
+    }
+
+    @Test
+    void testReduce() {
+        assertEquals(1 + 2 + 3 + 4, IntStream.of(1, 2, 3, 4).reduce(0, Integer::sum));
+    }
+
     private int factorial(int n) {
         return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
     }
 
     @Test
-    void testReduce() {
+    void testReduce_factorial() {
         assertEquals(1, factorial(1));
         assertEquals(2, factorial(2));
         assertEquals(6, factorial(3));
@@ -234,7 +244,6 @@ class IntStreamTests {
     void printFibbonaciNumbers() {
         // [0, 1] => 0 => [1, 1] => 1 => [1, 2] => 1 => [2, 3] => 2 => [3, 5] => 3 => [5, 8] => 5 => ...
         // 0, 1, 1, 1, 2, 3, 5
-
         Stream.iterate(
             new int[] { 0, 1 },
             twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
