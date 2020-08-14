@@ -29,7 +29,7 @@ class PersonListTests {
     @Test
     void printAgesOfPeopleSortedByLastName() {
         people.stream().sorted(
-                comparing(Person::getLastName)
+            comparing(Person::getLastName)
         ).forEach(printPerson);
     }
 
@@ -45,8 +45,13 @@ class PersonListTests {
 
     @Test
     void printCountOfPeopleByLengthOfFirstName() {
-        people.stream().collect(groupingBy(person -> person.getFirstName().length(), toList())).forEach(
-                (key, value) -> System.out.printf("firstNameLength = %d, peopleCount = %d\n", key, value.size())
+        people.stream().collect(
+            groupingBy(
+                person -> person.getFirstName().length(),
+                toList()
+            )
+        ).forEach(
+            (key, value) -> System.out.printf("firstNameLength = %d, peopleCount = %d\n", key, value.size())
         );
     }
 
