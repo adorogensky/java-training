@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-// + of, + range, + rangeClosed, + concat, + builder
+// + of, + range, + rangeClosed, + concat, ? builder
 // + asLongStream, + asDoubleStream, + boxed
 // + generate, ++ iterate(2), + forEach, ? forEachOrdered
 // + filter, + peek, + map, + mapToLong, + mapToDouble, + mapToObj
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 // + anyMatch, + allMatch, + noneMatch
 // + findFirst, + findAny
 // + takeWhile, + dropWhile
-// - collect
+// ? collect
 
 class IntStreamTests {
 
@@ -158,18 +158,6 @@ class IntStreamTests {
         assertEquals(1 + 2 + 3 + 4, IntStream.of(1, 2, 3, 4).reduce(0, Integer::sum));
     }
 
-    private int factorial(int n) {
-        return IntStream.range(1, n + 1).reduce(1, (x, y) -> x * y);
-    }
-
-    @Test
-    void testReduce_factorial() {
-        assertEquals(1, factorial(1));
-        assertEquals(2, factorial(2));
-        assertEquals(6, factorial(3));
-        assertEquals(24, factorial(4));
-    }
-
     @Test
     void testDistinct() {
         IntStream.of(1, 1, 2, 2, 4, 4, 4).distinct().forEach(System.out::println);
@@ -239,17 +227,15 @@ class IntStreamTests {
         ).forEach(System.out::println);
     }
 
-
     @Test
-    void printFibbonaciNumbers() {
-        // [0, 1] => 0 => [1, 1] => 1 => [1, 2] => 1 => [2, 3] => 2 => [3, 5] => 3 => [5, 8] => 5 => ...
-        // 0, 1, 1, 1, 2, 3, 5
-        Stream.iterate(
-            new int[] { 0, 1 },
-            twoPreviousNumbers -> new int[] { twoPreviousNumbers[1], twoPreviousNumbers[0] + twoPreviousNumbers[1] }
-        ).limit(10).mapToInt(
-            twoNumbers -> twoNumbers[0]
-        ).forEach(System.out::println);
+    void testCollect() {
+        assertEquals(
+            Arrays.asList(1, 2, 3, 4),
+            IntStream.of(1, 2, 3, 4).collect(
+                ArrayList<Integer>::new,
+                ArrayList::add,
+                ArrayList::addAll
+            )
+        );
     }
-
 }
