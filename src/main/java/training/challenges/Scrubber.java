@@ -1,4 +1,4 @@
-package training.strings;
+package training.challenges;
 
 /**
  * Online test from Gentis Solutions for 84.51 8/19/2020

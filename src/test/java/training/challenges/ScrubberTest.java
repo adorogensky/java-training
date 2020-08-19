@@ -1,4 +1,4 @@
-package training.strings;
+package training.challenges;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
-package training.problems;
+package training.challenges;
 
 import org.junit.jupiter.api.Test;
+import training.challenges.PascalTriangle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
