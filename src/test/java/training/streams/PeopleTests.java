@@ -14,17 +14,17 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static training.common.PersonTestData.*;
 
-class PersonListTests {
+class PeopleTests {
 
     private final List<Person> people = asList(mikeWalsh(), jakeHillis(), sumitChaudhari());
 
     private final Consumer<Person> printPerson =
-            person -> System.out.printf(
-                    "firstName = %-5s, lastName = %-9s, age = %2d\n",
-                    person.getFirstName(),
-                    person.getLastName(),
-                    person.getAge()
-            );
+        person -> System.out.printf(
+            "firstName = %-5s, lastName = %-9s, age = %2d\n",
+            person.getFirstName(),
+            person.getLastName(),
+            person.getAge()
+        );
 
     @Test
     void printAgesOfPeopleSortedByLastName() {
