@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ScrubberTest {
+public class StringScrubberTest {
 
-    private Scrubber scrubber = new Scrubber();
+    private StringScrubber scrubber = new StringScrubber();
 
     @Test
     public void test() {

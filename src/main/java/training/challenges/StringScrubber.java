@@ -9,7 +9,7 @@ package training.challenges;
  * "hello world, eo" => "hll wrld"
  * "blue car, abc" => "lue ar"
  */
-public class Scrubber {
+public class StringScrubber {
 
     public String scrub(String str) {
         int idxOfComma = str.indexOf(",");
