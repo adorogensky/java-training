@@ -10,7 +10,7 @@ public class MergeSort {
             int array0 = array[0];
             array[0] = array[1];
             array[1] = array0;
-        } else if (array.length == 3) {
+        } else if (array.length > 2) {
             // array[0] & array[1..2]
             int[] leftHalf = sort(Arrays.copyOfRange(array, 0, array.length / 2));
             int[] rightHalf = sort(Arrays.copyOfRange(array, array.length / 2, array.length));
