@@ -6,12 +6,7 @@ public class MergeSort {
 
     public int[] sort(int... array) {
         if (array.length == 1) return array;
-        else if (array.length == 2 && array[0] > array[1]) {
-            int array0 = array[0];
-            array[0] = array[1];
-            array[1] = array0;
-        } else if (array.length > 2) {
-            // array[0] & array[1..2]
+        else if (array.length > 1) {
             int[] leftHalf = sort(Arrays.copyOfRange(array, 0, array.length / 2));
             int[] rightHalf = sort(Arrays.copyOfRange(array, array.length / 2, array.length));
             int leftHalfIdx = 0, rightHalfIdx = 0;
