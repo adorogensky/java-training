@@ -42,4 +42,9 @@ public class SortTests {
     public void fourElementsInAscendingOrderSort_shouldReturn_thoseFourElementsInAscendingOrder() {
         assertArrayEquals(new int[] { 1, 2, 3, 4 }, sort.sort(1, 2, 3, 4));
     }
+
+    @Test
+    public void fourElementsInDescendingOrderSort_shouldReturn_thoseFourElementsInAscendingOrder() {
+        assertArrayEquals(new int[] { 1, 2, 3, 4 }, sort.sort(4, 3, 2, 1));
+    }
 }
