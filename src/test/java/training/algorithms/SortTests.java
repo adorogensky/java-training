@@ -27,4 +27,9 @@ public class SortTests {
     public void threeElementsInAscendingOrderSort_shouldReturn_thoseThreeElementsInAscendingOrder() {
         assertArrayEquals(new int[] { 1, 2, 3 }, sort.sort(1, 2, 3));
     }
+
+    @Test
+    public void threeElementsInDescendingOrderSort_shouldReturn_thoseThreeElementsInAscendinOrder() {
+        assertArrayEquals(new int[] { 1, 2, 3 }, sort.sort(3, 2, 1));
+    }
 }
