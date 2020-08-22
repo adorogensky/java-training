@@ -14,7 +14,12 @@ public class SortTests {
     }
 
     @Test
-    public void twoElementsInAscendingOrderSort_shouldReturn_thoseTwoElementsInSameOrder() {
+    public void twoElementsInAscendingOrderSort_shouldReturn_thoseTwoElementsInAscendingOrder() {
         assertArrayEquals(new int[] { 1, 2 }, sort.sort(1, 2));
+    }
+
+    @Test
+    public void twoElementsInDescendingOrderSort_shouldReturn_thoseTwoElementsInAscendingOrder() {
+        assertArrayEquals(new int[] { 1, 2 }, sort.sort(2, 1));
     }
 }
