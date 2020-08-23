@@ -6,11 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class SortTests {
 
-    private final MergeSort sort = new MergeSort();
+    private final QuickSort sort = new QuickSort();
 
     @Test
     public void oneElementSort_shouldReturn_thatOneElement() {
         assertArrayEquals(new int[] { 1 }, sort.sort(1));
+    }
+
+    @Test
+    public void twoEqualElementsSort_shouldReturn_thoseTwoElements() {
+        assertArrayEquals(new int[] { 2, 2 }, sort.sort(2, 2));
     }
 
     @Test
@@ -24,18 +29,28 @@ public class SortTests {
     }
 
     @Test
+    public void threeEqualElementsSort_shouldReturn_thoseThreeElements() {
+        assertArrayEquals(new int[] { 3, 3, 3 }, sort.sort(3, 3, 3));
+    }
+
+    @Test
     public void threeElementsInAscendingOrderSort_shouldReturn_thoseThreeElementsInAscendingOrder() {
         assertArrayEquals(new int[] { 1, 2, 3 }, sort.sort(1, 2, 3));
     }
 
     @Test
-    public void threeElementsInDescendingOrderSort_shouldReturn_thoseThreeElementsInAscendinOrder() {
+    public void threeElementsInDescendingOrderSort_shouldReturn_thoseThreeElementsInAscendingOrder() {
         assertArrayEquals(new int[] { 1, 2, 3 }, sort.sort(3, 2, 1));
     }
 
     @Test
-    public void threeElementsInRandomOrderSort_shouldReturn_thoseThreeElementsInAscendinOrder() {
+    public void threeElementsInRandomOrderSort_shouldReturn_thoseThreeElementsInAscendingOrder() {
         assertArrayEquals(new int[] { 1, 2, 3 }, sort.sort(3, 1, 2));
+    }
+
+    @Test
+    public void oneElementAndTwoEqualElementsSort_shouldReturn_thoseThreeElementsInAscendinOrder() {
+        assertArrayEquals(new int[] { 1, 1, 3 }, sort.sort(3, 1, 1));
     }
 
     @Test
