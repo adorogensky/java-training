@@ -2,6 +2,15 @@ plugins {
     id 'java'
 }
 
+sourceSets {
+    benchmark {
+        java.srcDirs = ['src/benchmarks/java']
+        resources.srcDirs = ['src/benchmarks/resources']
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -11,6 +20,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
     testImplementation 'org.mockito:mockito-core:3.4.4'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.4.4'
+    benchmarkImplementation 'org.openjdk.jmh:jmh-core:1.25'
+    benchmarkAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.25'
 }
 
 test {
@@ -23,5 +34,12 @@ test {
 group = 'com.exebar.poc.java'
 version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+task benchmarks(type: JavaExec, dependsOn: benchmarkClasses) {
+    main = 'org.openjdk.jmh.Main'
+    classpath = sourceSets.benchmark.compileClasspath + sourceSets.benchmark.runtimeClasspath
+}
+
+classes.finalizedBy(benchmarkClasses)
 
 
