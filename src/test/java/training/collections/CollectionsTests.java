@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * List
@@ -17,9 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CollectionsTests {
 
     @Test
-    public void emptyListIsImmutable() {
+    public void testEmptyList() {
         List<String> checkedEmptyList = Collections.emptyList();
         // List<String> uncheckedEmptyList = Collections.EMPTY_LIST;
+        assertEquals(0, checkedEmptyList.size());
         assertThrows(UnsupportedOperationException.class, () -> checkedEmptyList.add(""));
+    }
+
+    @Test
+    public void testAddAll() {
+        List<Integer> list = new ArrayList<>();
+        Collections.addAll(list, 1, 2, 3, 4);
+        assertArrayEquals(new Integer[] { 1, 2, 3, 4 }, list.toArray());
     }
 }
