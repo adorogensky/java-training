@@ -30,4 +30,18 @@ public class CollectionsTests {
         Collections.addAll(list, 1, 2, 3, 4);
         assertArrayEquals(new Integer[] { 1, 2, 3, 4 }, list.toArray());
     }
+
+    @Test
+    public void testFill() {
+        List<Integer> list = new ArrayList<>();
+        Collections.fill(list, 1);
+
+        assertTrue(list.isEmpty());
+
+        list.add(2);
+        Collections.fill(list, 3);
+
+        assertEquals(1, list.size());
+        assertEquals(3, list.get(0));
+    }
 }
