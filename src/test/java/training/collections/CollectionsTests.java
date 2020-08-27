@@ -2,6 +2,7 @@ package training.collections;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,5 +44,12 @@ public class CollectionsTests {
 
         assertEquals(1, list.size());
         assertEquals(3, list.get(0));
+    }
+
+    @Test
+    public void testDisjoint() {
+        List<Integer> list1 = Arrays.asList(1, 2, 3);
+        List<Integer> list2 = Arrays.asList(4, 5, 6);
+        assertTrue(Collections.disjoint(list1, list2));
     }
 }
