@@ -52,4 +52,11 @@ public class CollectionsTests {
         List<Integer> list2 = Arrays.asList(4, 5, 6);
         assertTrue(Collections.disjoint(list1, list2));
     }
+
+    @Test
+    public void test_nCopies() {
+        List<String> threeHello = Collections.nCopies(3, "hello");
+        assertEquals(3, threeHello.size());
+        assertArrayEquals(new String[] { "hello", "hello", "hello" }, threeHello.toArray());
+    }
 }
