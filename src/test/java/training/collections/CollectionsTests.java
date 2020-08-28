@@ -71,4 +71,11 @@ public class CollectionsTests {
         numbers = Arrays.asList(4, 3, 2, 1);
         assertEquals(-1, Collections.binarySearch(numbers, 2));
     }
+
+    @Test
+    public void testFrequency() {
+        List<Integer> numbers = Arrays.asList(2, 2, 3, 4, 5, 2);
+        assertEquals(3, Collections.frequency(numbers, 2));
+        assertEquals(0, Collections.frequency(numbers, 6));
+    }
 }
