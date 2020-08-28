@@ -129,5 +129,14 @@ public class CollectionsTests {
         assertEquals(6, Collections.min(numbers, (a, b) -> b - a));
     }
 
+    @Test
+    public void testReplaceAll() {
+        List<Integer> numbers = Arrays.asList(4, 5, 3, 4);
+        assertTrue(Collections.replaceAll(numbers, 4, 1));
+        assertEquals(
+            Arrays.asList(1, 5, 3, 1), numbers
+        );
+    }
+
 
 }
