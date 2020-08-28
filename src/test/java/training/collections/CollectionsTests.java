@@ -99,4 +99,11 @@ public class CollectionsTests {
         // returns lowest index of a sublist
         assertEquals(0, Collections.indexOfSubList(numbers, Arrays.asList(2, 4)));
     }
+
+    @Test
+    public void testLastIndexOfSubList() {
+        List<Integer> numbers = Arrays.asList(2, 4, 5, 7, 8, 2, 4);
+
+        assertEquals(5, Collections.lastIndexOfSubList(numbers, Arrays.asList(2, 4)));
+    }
 }
