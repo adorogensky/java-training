@@ -138,5 +138,12 @@ public class CollectionsTests {
         );
     }
 
+    @Test
+    public void testReverse() {
+        List<Integer> numbers = Arrays.asList(4, 5, 3, 4);
+        Collections.reverse(numbers);
+        assertEquals(Arrays.asList(4, 3, 5, 4), numbers);
+    }
+
 
 }
