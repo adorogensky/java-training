@@ -112,4 +112,14 @@ public class CollectionsTests {
         Vector<Integer> vector = new Vector<>(Arrays.asList(1, 2, 3));
         assertEquals(Arrays.asList(1, 2, 3), Collections.list(vector.elements()));
     }
+
+    @Test
+    public void testMax() {
+        List<Integer> numbers = Arrays.asList(2, 4, 6);
+        assertEquals(6, Collections.max(numbers));
+
+        assertEquals(2, Collections.max(numbers, (a, b) -> b - a));
+    }
+
+
 }
