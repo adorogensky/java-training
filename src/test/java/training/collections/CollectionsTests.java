@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Enumeration
  * Iterator
  * ListIterator
+ * Comparator
  */
 public class CollectionsTests {
 
@@ -58,5 +59,16 @@ public class CollectionsTests {
         List<String> threeHello = Collections.nCopies(3, "hello");
         assertEquals(3, threeHello.size());
         assertArrayEquals(new String[] { "hello", "hello", "hello" }, threeHello.toArray());
+    }
+
+    @Test
+    public void testBinarySearch() {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+        assertEquals(2, Collections.binarySearch(numbers, 3));
+
+        // binary search on an array of numbers sorted in reverse order
+        // will not find elements in the right half of the array
+        numbers = Arrays.asList(4, 3, 2, 1);
+        assertEquals(-1, Collections.binarySearch(numbers, 2));
     }
 }
