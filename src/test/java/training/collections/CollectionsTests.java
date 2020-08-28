@@ -121,5 +121,13 @@ public class CollectionsTests {
         assertEquals(2, Collections.max(numbers, (a, b) -> b - a));
     }
 
+    @Test
+    public void testMin() {
+        List<Integer> numbers = Arrays.asList(2, 4, 6);
+        assertEquals(2, Collections.min(numbers));
+
+        assertEquals(6, Collections.min(numbers, (a, b) -> b - a));
+    }
+
 
 }
