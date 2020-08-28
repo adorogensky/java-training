@@ -78,4 +78,17 @@ public class CollectionsTests {
         assertEquals(3, Collections.frequency(numbers, 2));
         assertEquals(0, Collections.frequency(numbers, 6));
     }
+
+    @Test
+    public void testCopy() {
+        List<Integer> numbers = Arrays.asList(5, 3, 2, 7);
+
+        // Because the dest list should have at least the number of elements from the src list
+        // I can't even think of any real world applications for this use case..
+        assertThrows(
+            IndexOutOfBoundsException.class,
+            () -> Collections.copy(new ArrayList<>(), numbers),
+            "Source does not fit in dest"
+        );
+    }
 }
