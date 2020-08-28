@@ -91,4 +91,12 @@ public class CollectionsTests {
             "Source does not fit in dest"
         );
     }
+
+    @Test
+    public void testIndexOfSubList() {
+        List<Integer> numbers = Arrays.asList(2, 4, 5, 7, 8, 2, 4);
+
+        // returns lowest index of a sublist
+        assertEquals(0, Collections.indexOfSubList(numbers, Arrays.asList(2, 4)));
+    }
 }
