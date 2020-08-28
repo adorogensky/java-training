@@ -106,4 +106,10 @@ public class CollectionsTests {
 
         assertEquals(5, Collections.lastIndexOfSubList(numbers, Arrays.asList(2, 4)));
     }
+
+    @Test
+    public void testList() {
+        Vector<Integer> vector = new Vector<>(Arrays.asList(1, 2, 3));
+        assertEquals(Arrays.asList(1, 2, 3), Collections.list(vector.elements()));
+    }
 }
