@@ -51,7 +51,9 @@ public class CollectionsTests {
     public void testDisjoint() {
         List<Integer> list1 = Arrays.asList(1, 2, 3);
         List<Integer> list2 = Arrays.asList(4, 5, 6);
+        List<Integer> list3 = Arrays.asList(3, 4, 5);
         assertTrue(Collections.disjoint(list1, list2));
+        assertFalse(Collections.disjoint(list1, list3));
     }
 
     @Test
@@ -144,6 +146,4 @@ public class CollectionsTests {
         Collections.reverse(numbers);
         assertEquals(Arrays.asList(4, 3, 5, 4), numbers);
     }
-
-
 }
