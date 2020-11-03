@@ -6,15 +6,14 @@ public class MergeSort {
 
     public int[] sort(int... array) {
         if (array.length == 1) return array;
-        else if (array.length > 1) {
-            int[] leftHalf = sort(Arrays.copyOfRange(array, 0, array.length / 2));
-            int[] rightHalf = sort(Arrays.copyOfRange(array, array.length / 2, array.length));
-            merge(array, leftHalf, rightHalf);
-        }
-        return array;
+
+        int[] leftHalf = sort(Arrays.copyOfRange(array, 0, array.length / 2));
+        int[] rightHalf = sort(Arrays.copyOfRange(array, array.length / 2, array.length));
+
+        return merge(array, leftHalf, rightHalf);
     }
 
-    private void merge(int[] array, int[] leftHalf, int[] rightHalf) {
+    private int[] merge(int[] array, int[] leftHalf, int[] rightHalf) {
         int leftHalfIdx = 0, rightHalfIdx = 0;
 
         for (int i = 0; i < array.length; i++) {
@@ -28,5 +27,7 @@ public class MergeSort {
                 array[i] = leftHalf[leftHalfIdx++];
             }
         }
+
+        return array;
     }
 }
