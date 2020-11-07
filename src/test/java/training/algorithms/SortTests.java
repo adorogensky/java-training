@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class SortTests {
 
-    private final QuickSort sort = new QuickSort();
+    private final RehearseQuickSort sort = new RehearseQuickSort();
 
     @Test
     public void oneElementSort_shouldReturn_thatOneElement() {
