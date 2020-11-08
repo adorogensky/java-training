@@ -21,9 +21,12 @@ public class RehearseQuickSort {
     private int partition(int[] a, int l, int r) {
         swap(a, l, new Random().nextInt(r - l) + l);
         // a[l] as pivot
-        // pIdx should point to the first element that is greater than the pivot in the rearranged array
+        // pIdx - 1 should point to the last element that is less than the pivot in the rearranged array
         int pIdx = l + 1;
-        // [3, 1, 5, 2, 2, 8]
+        // [3, 1, 1, 2, 2] pIdx = 5, pIdx - 1 = 4, resulting array is [2, 1, 1, 2, 3]
+        // [3, 5, 7, 8, 8] pIdx = 1, pIdx - 1 = 0, resulting array is [3, 5, 7, 8, 8]
+        // [3, 1, 2, 5, 8] pIdx = 3, pIdx - 1 = 2, resulting array is [2, 1, 3, 5, 8]
+
         for (int i = l + 1; i <= r; i++) {
             if (a[i] < a[l]) {
                 swap(a, i, pIdx++);
