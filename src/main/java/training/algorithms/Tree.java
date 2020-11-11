@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Graph {
+public class Tree {
 
     static class Node {
         private final String value;
@@ -18,7 +18,7 @@ public class Graph {
 
     private final Node node;
 
-    public Graph(Node node) {
+    public Tree(Node node) {
         this.node = node;
     }
 
