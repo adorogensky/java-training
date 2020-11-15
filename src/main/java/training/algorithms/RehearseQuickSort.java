@@ -14,7 +14,7 @@ public class RehearseQuickSort {
         // we're assuming here that l < r
         int pIdx = partition(a, l, r);
         sort(a, 0, pIdx - 1);
-        return sort(a, pIdx + 1, a.length - 1);
+        return sort(a, pIdx + 1, r);
     }
 
     private int partition(int[] a, int l, int r) {
