@@ -24,12 +24,12 @@ public class RehearseArrayInversions {
 
         return countAndMerge(
             countAndSort(Arrays.copyOfRange(a, 0, a.length / 2)),
-            countAndSort(Arrays.copyOfRange(a, a.length/2, a.length))
+            countAndSort(Arrays.copyOfRange(a, a.length / 2, a.length))
         );
     }
 
     private R countAndMerge(R r1, R r2) {
-        R r = new R(new int[r1.count + r2.count], r1.count + r2.count);
+        R r = new R(new int[r1.array.length + r2.array.length], r1.count + r2.count);
         int r1Idx = 0, r2Idx = 0;
 
         for (int i = 0; i < r.array.length; i++) {
@@ -37,10 +37,9 @@ public class RehearseArrayInversions {
                 r.array[i] = r2.array[r2Idx++];
             } else if (r2Idx == r2.array.length) {
                 r.array[i] = r1.array[r1Idx++];
-            } else if (r2.array[r2Idx] < r1.array[r1Idx]) {
-                r.array[i] = r2.array[r2Idx];
-                r.count += r1.array.length - r2Idx;
-                r2Idx++;
+            } else if (r1.array[r1Idx] > r2.array[r2Idx]) {
+                r.array[i] = r2.array[r2Idx++];
+                r.count += r1.array.length - r1Idx;
             } else {
                 r.array[i] = r1.array[r1Idx++];
             }
