@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class SortTests {
-
-    private final RehearseMergeSort sort = new RehearseMergeSort();
+public class SortTests { private final RehearseQuickSort sort = new RehearseQuickSort();
 
     @Test
     public void oneElementSort_shouldReturn_thatOneElement() {
