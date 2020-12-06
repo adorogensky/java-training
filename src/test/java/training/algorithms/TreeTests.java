@@ -48,6 +48,8 @@ public class TreeTests {
         node3.leaves = Arrays.asList(node6, node7);
 
         Tree2 tree2 = new Tree2(node1);
-        tree2.print(2);
+        //tree2.print(2, Tree2.PrintMode.MANY);
+
+        tree2.print(2, Tree2.PrintMode.ONE_LAYER);
     }
 }

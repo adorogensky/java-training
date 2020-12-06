@@ -14,12 +14,21 @@ public class Tree2 {
         }
     }
 
+    static enum PrintMode {
+        ONE_LAYER, MANY_LAYERS
+    };
+
     public Tree2(Node root) {
         this.root = root;
     }
 
-    // enumerate layers starting from 1
-    public void print(int layerNo) {
+    /**
+     * Layers enumeration starts with 1.
+     * layerNo > 0 - print all layers up to layerNo
+     * layerNo <= 0 - print all layers
+     * @param layerNo
+     */
+    public void print(int layerNo, PrintMode printMode) {
         Deque<Node> currentLayerQ = new LinkedList<>(Collections.singletonList(root));
         Deque<Node> nextLayerQ = new LinkedList<>();
         int currentLayerNo = 1;
@@ -28,7 +37,9 @@ public class Tree2 {
             nextLayerQ.clear();
 
             for (Node node : currentLayerQ) {
-                System.out.print(node.value + " ");
+                if (printMode == PrintMode.MANY_LAYERS || printMode == PrintMode.ONE_LAYER && currentLayerNo == layerNo) {
+                    System.out.print(node.value + " ");
+                }
 
                 if (node.leaves != null)
                     nextLayerQ.addAll(node.leaves);
@@ -40,10 +51,9 @@ public class Tree2 {
 
             if (layerNo > 0 && ++currentLayerNo > layerNo) break;
         }
-
     }
 
     public void print() {
-        print(-1);
+        print(-1, PrintMode.MANY_LAYERS);
     }
 }
