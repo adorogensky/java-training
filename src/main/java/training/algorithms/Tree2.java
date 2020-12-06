@@ -1,8 +1,6 @@
 package training.algorithms;
 
-import java.util.Collection;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Tree2 {
     private Node root;
@@ -20,11 +18,11 @@ public class Tree2 {
         this.root = root;
     }
 
-    public void print() {
-        System.out.println(root.value);
-
-        Deque<Node> currentLayerQ = new LinkedList<>(root.leaves);
+    // enumerate layers starting from 1
+    public void print(int layerNo) {
+        Deque<Node> currentLayerQ = new LinkedList<>(Collections.singletonList(root));
         Deque<Node> nextLayerQ = new LinkedList<>();
+        int currentLayerNo = 1;
 
         while (!currentLayerQ.isEmpty()) {
             nextLayerQ.clear();
@@ -39,7 +37,13 @@ public class Tree2 {
             System.out.println();
             currentLayerQ.clear();
             currentLayerQ.addAll(nextLayerQ);
+
+            if (layerNo > 0 && ++currentLayerNo > layerNo) break;
         }
 
+    }
+
+    public void print() {
+        print(-1);
     }
 }
