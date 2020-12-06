@@ -12,6 +12,11 @@ public class Tree2 {
         Node(String value) {
             this.value = value;
         }
+
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 
     static enum PrintMode {
@@ -29,25 +34,31 @@ public class Tree2 {
      * @param layerNo
      */
     public void print(int layerNo, PrintMode printMode) {
-        Deque<Node> currentLayerQ = new LinkedList<>(Collections.singletonList(root));
-        Deque<Node> nextLayerQ = new LinkedList<>();
+        Queue<Node> layer = new LinkedList<>(Collections.singletonList(root));
         int currentLayerNo = 1;
 
-        while (!currentLayerQ.isEmpty()) {
-            nextLayerQ.clear();
+        while (!layer.isEmpty()) {
+            Node node;
+            int layerElementCount = 0;
+            int layerSize = layer.size();
 
-            for (Node node : currentLayerQ) {
-                if (printMode == PrintMode.MANY_LAYERS || printMode == PrintMode.ONE_LAYER && currentLayerNo == layerNo) {
-                    System.out.print(node.value + " ");
+            do {
+                node = layer.poll();
+                if (node != null) {
+                    if (printMode == PrintMode.MANY_LAYERS || printMode == PrintMode.ONE_LAYER && currentLayerNo == layerNo) {
+                        System.out.print(node.value + " ");
+                    }
+                    if (++layerElementCount == layerSize)
+                        System.out.println();
+                    if (node.leaves != null) {
+                        layer.addAll(node.leaves);
+                        if (layerElementCount == layerSize) {
+                            layerElementCount = 0;
+                            layerSize = layer.size();
+                        }
+                    }
                 }
-
-                if (node.leaves != null)
-                    nextLayerQ.addAll(node.leaves);
-            }
-
-            System.out.println();
-            currentLayerQ.clear();
-            currentLayerQ.addAll(nextLayerQ);
+            } while (node != null);
 
             if (layerNo > 0 && ++currentLayerNo > layerNo) break;
         }
