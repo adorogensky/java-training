@@ -2,6 +2,8 @@ package training.algorithms;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 public class TreeTests {
 
     @Test
@@ -29,5 +31,23 @@ public class TreeTests {
 
         // D E F
         tree.printLayer(2);
+    }
+
+    @Test
+    public void testPrintLayers2() {
+        Tree2.Node node1 = new Tree2.Node("1");
+        Tree2.Node node2 = new Tree2.Node("2");
+        Tree2.Node node3 = new Tree2.Node("3");
+        Tree2.Node node4 = new Tree2.Node("4");
+        Tree2.Node node5 = new Tree2.Node("5");
+        Tree2.Node node6 = new Tree2.Node("6");
+        Tree2.Node node7 = new Tree2.Node("7");
+
+        node1.leaves = Arrays.asList(node2, node3);
+        node2.leaves = Arrays.asList(node4, node5);
+        node3.leaves = Arrays.asList(node6, node7);
+
+        Tree2 tree2 = new Tree2(node1);
+        tree2.print();
     }
 }
