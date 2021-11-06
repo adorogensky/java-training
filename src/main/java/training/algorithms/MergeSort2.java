@@ -11,13 +11,14 @@ public class MergeSort2 {
             return array;
         }
 
-        int[] leftSortedArray = sort(array, 0, array.length / 2);
-        int[] rightSortedArray = sort(array, array.length / 2, array.length);
+        int midIdx = (endIdx - startIdx - 1) / 2;
+        int[] leftSortedArray = sort(array, startIdx, midIdx);
+        int[] rightSortedArray = sort(array, midIdx, endIdx);
 
         int leftArrayIdx = 0;
         int rightArrayIdx = 0;
 
-        for (int i = 0; i < array.length; i++) {
+        for (int i = startIdx; i < endIdx; i++) {
             if (leftArrayIdx == leftSortedArray.length) {
                 array[i] = rightSortedArray[rightArrayIdx++];
             } else if (rightArrayIdx == rightSortedArray.length) {
