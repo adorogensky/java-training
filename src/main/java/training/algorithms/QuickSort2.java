@@ -9,15 +9,19 @@ public class QuickSort2 {
     private int[] sort(int[] array, int startIdx, int endIdx) {
         if (startIdx >= endIdx) return array;
         int pivotIdx = partition(array, startIdx, endIdx);
-//        sort(array, 0, pivotIdx - 1);
-//        sort(array, pivotIdx + 1, array.length - 1);
+        sort(array, 0, pivotIdx - 1);
+        sort(array, pivotIdx + 1, array.length - 1);
         return array;
     }
 
-    // endIdx > startIdx
-    // length = endIdx - startIdx + 1
-    // midIdx = startIdx + (endIdx - startIdx + 1)/2
-    // 0..3, midIdx = 0 + 2 = 2
+    // array = {3, 3, 3}
+    // inputs
+    // | sIdx | eIdx | pIdx |
+    // |  0   |  2   |  1  |
+    // iterations 31
+    //   | itr | i | i < pIdx | rIdx | rIdx > eIdx |
+    //   |  1  | 0 |   true   |  2  |    false    |
+    //   |  2  | 1 |  false  |
     private int partition(int[] array, int startIdx, int endIdx) {
         int length = endIdx - startIdx + 1;
         int pIdx = startIdx + (length / 2);
@@ -27,11 +31,12 @@ public class QuickSort2 {
         while(i < pIdx) {
             if (rightIdx > endIdx) break;
             if (array[i] > array[pIdx]) {
-                swap(array, i++, rightIdx++);
+                swap(array, i, rightIdx++);
             }
+            i++;
         }
 
-        if (i < pIdx) {
+        if (i < pIdx && array[i] > array[pIdx]) {
             swap(array, i, pIdx);
             pIdx = i + 1;
         }
