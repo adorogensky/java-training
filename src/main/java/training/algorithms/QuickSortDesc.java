@@ -1,6 +1,6 @@
 package training.algorithms;
 
-public class QuickSort2 {
+public class QuickSortDesc {
 
     public int[] sort(int... a) {
         return sort(a, 0, a.length - 1);
@@ -14,30 +14,25 @@ public class QuickSort2 {
         return a;
     }
 
-    // sIdx - start index
-    // eIdx - end index
-    // pIdx - pivot element index
-    // p - pivot element
-    // clh - count of less than pivot elements
     private int partition(int[] a, int sIdx, int eIdx) {
         int p = a[sIdx];
-        int clh = 0;
+        int clp = 0;
         for (int i = sIdx + 1; i <= eIdx; i++) {
-            if (a[i] < p) {
-                swap(a, i, sIdx + ++clh);
+            if (a[i] >= p) {
+                swap(a, i, sIdx + ++clp);
             }
         }
 
-        int pIdx = sIdx + clh;
+        int pIdx = sIdx + clp;
         swap(a, sIdx, pIdx);
 
         return pIdx;
     }
 
-    private void swap(int[] a, int lIdx, int rIdx) {
-        if (lIdx == rIdx) return;
-        int lEl = a[lIdx];
-        a[lIdx] = a[rIdx];
-        a[rIdx] = lEl;
+    private void swap(int[] a, int i, int j) {
+        if (i == j) return;
+        int aj = a[j];
+        a[j] = a[i];
+        a[i] = aj;
     }
 }

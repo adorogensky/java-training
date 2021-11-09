@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class SortTests {
+public class SortAscTests {
 
-    private final QuickSort2 sort = new QuickSort2();
+    private final QuickSortAsc2 sort = new QuickSortAsc2();
 
     @Test
     public void oneElementSort_shouldReturn_thatOneElement() {

@@ -2,7 +2,7 @@ package training.algorithms;
 
 import java.util.Arrays;
 
-public class MergeSort3 {
+public class MergeSortAsc3 {
 
     public int[] sort(int... array) {
         if (array.length == 1) return array;

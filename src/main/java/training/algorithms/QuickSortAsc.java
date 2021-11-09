@@ -1,6 +1,6 @@
 package training.algorithms;
 
-public class QuickSort {
+public class QuickSortAsc {
 
     public int[] sort(int... array) {
         return sort(array, 0, array.length - 1);
