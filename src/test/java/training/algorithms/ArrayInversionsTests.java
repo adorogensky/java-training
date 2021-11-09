@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class ArrayInversionsTests {
 
-    private final ArrayInversions arrayInversions = new ArrayInversions();
+    private final ArrayInversions2 arrayInversions = new ArrayInversions2();
 
     @Test
     public void oneInteger_shouldReturn_0() {
