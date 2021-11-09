@@ -20,14 +20,16 @@ public class QuickSort2 {
     // p - pivot element
     // llpIdx - last less that the pivot element index
     private int partition(int[] a, int sIdx, int eIdx) {
-        int pIdx = sIdx;
-        int p = a[pIdx];
+        int p = a[sIdx];
         int llpIdx = sIdx + 1;
         for (int i = sIdx + 1; i <= eIdx; i++) {
             if (a[i] < p) {
                 swap(a, i, llpIdx++);
             }
         }
+
+        int pIdx = llpIdx - 1;
+        swap(a, sIdx, pIdx);
 
         return pIdx;
     }
