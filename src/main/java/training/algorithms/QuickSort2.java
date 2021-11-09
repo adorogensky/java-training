@@ -2,51 +2,40 @@ package training.algorithms;
 
 public class QuickSort2 {
 
-    public int[] sort(int... array) {
-        return sort(array, 0, array.length - 1);
+    public int[] sort(int... a) {
+        return sort(a, 0, a.length - 1);
     }
 
-    private int[] sort(int[] array, int startIdx, int endIdx) {
-        if (startIdx >= endIdx) return array;
-        int pivotIdx = partition(array, startIdx, endIdx);
-        sort(array, 0, pivotIdx - 1);
-        sort(array, pivotIdx + 1, array.length - 1);
-        return array;
+    private int[] sort(int[] a, int sIdx, int eIdx) {
+        if (sIdx >= eIdx) return a;
+        int pIdx = partition(a, sIdx, eIdx);
+        sort(a, sIdx, pIdx - 1);
+        sort(a, pIdx + 1, eIdx);
+        return a;
     }
 
-    // array = {3, 3, 3}
-    // inputs
-    // | sIdx | eIdx | pIdx |
-    // |  0   |  2   |  1  |
-    // iterations 31
-    //   | itr | i | i < pIdx | rIdx | rIdx > eIdx |
-    //   |  1  | 0 |   true   |  2  |    false    |
-    //   |  2  | 1 |  false  |
-    private int partition(int[] array, int startIdx, int endIdx) {
-        int length = endIdx - startIdx + 1;
-        int pIdx = startIdx + (length / 2);
-        int rightIdx = pIdx + 1;
-        int i = startIdx;
-
-        while(i < pIdx) {
-            if (rightIdx > endIdx) break;
-            if (array[i] > array[pIdx]) {
-                swap(array, i, rightIdx++);
+    // sIdx - start index
+    // eIdx - end index
+    // pIdx - pivot element index
+    // p - pivot element
+    // llpIdx - last less that the pivot element index
+    private int partition(int[] a, int sIdx, int eIdx) {
+        int pIdx = sIdx;
+        int p = a[pIdx];
+        int llpIdx = sIdx + 1;
+        for (int i = sIdx + 1; i <= eIdx; i++) {
+            if (a[i] < p) {
+                swap(a, i, llpIdx++);
             }
-            i++;
-        }
-
-        if (i < pIdx && array[i] > array[pIdx]) {
-            swap(array, i, pIdx);
-            pIdx = i + 1;
         }
 
         return pIdx;
     }
 
-    private void swap(int[] array, int i, int j) {
-        int aj = array[j];
-        array[j] = array[i];
-        array[i] = aj;
+    private void swap(int[] a, int lIdx, int rIdx) {
+        if (lIdx == rIdx) return;
+        int lEl = a[lIdx];
+        a[lIdx] = a[rIdx];
+        a[rIdx] = lEl;
     }
 }
