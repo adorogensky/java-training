@@ -18,17 +18,17 @@ public class QuickSort2 {
     // eIdx - end index
     // pIdx - pivot element index
     // p - pivot element
-    // llpIdx - last less that the pivot element index
+    // clh - count of less than pivot elements
     private int partition(int[] a, int sIdx, int eIdx) {
         int p = a[sIdx];
-        int llpIdx = sIdx + 1;
+        int clh = 0;
         for (int i = sIdx + 1; i <= eIdx; i++) {
             if (a[i] < p) {
-                swap(a, i, llpIdx++);
+                swap(a, i, sIdx + ++clh);
             }
         }
 
-        int pIdx = llpIdx - 1;
+        int pIdx = sIdx + clh;
         swap(a, sIdx, pIdx);
 
         return pIdx;
