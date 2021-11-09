@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class SortDescTests {
 
-    private final QuickSortDesc sort = new QuickSortDesc();
+    private final MergeSortDesc sort = new MergeSortDesc();
 
     @Test
     public void oneElementSort_shouldReturn_thatOneElement() {
