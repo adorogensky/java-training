@@ -24,6 +24,10 @@ public class Node {
     }
 
     boolean contains(String value) {
+        return dfs(this, value);
+    }
+
+    private boolean bfs(String value) {
         if (Objects.equals(this.value, value)) {
             return true;
         }
@@ -45,6 +49,22 @@ public class Node {
                     neighbor.visited = true;
                     queue.addAll(neighbor.neighbors);
                 }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean dfs(Node node, String value) {
+        if (Objects.equals(node.value, value)) {
+            return true;
+        }
+
+        node.visited = true;
+
+        for (Node neighbor : node.neighbors) {
+            if (!neighbor.visited) {
+                return dfs(neighbor, value);
             }
         }
 
