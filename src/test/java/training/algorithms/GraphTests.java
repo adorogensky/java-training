@@ -9,25 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GraphTests {
 
     @Test
-    public void testGetNodes_BFS_Mode() {
-        Graph.Node nodeA = new Graph.Node("A");
-        Graph.Node nodeB = new Graph.Node("B");
-        Graph.Node nodeC = new Graph.Node("C");
-        Graph.Node nodeD = new Graph.Node("D");
+    public void allTests() {
+        Node nodeA = new Node("A");
+        Node nodeB = new Node("B");
+        Node nodeC = new Node("C");
+        Node nodeD = new Node("D");
+        nodeA.connect(nodeB, nodeC, nodeD);
+        nodeB.connect(nodeA, nodeC, nodeD);
+        nodeC.connect(nodeA, nodeB, nodeD);
+        nodeD.connect(nodeA, nodeB, nodeC);
 
-        nodeA.children.add(nodeB);
-        nodeB.children.add(nodeC);
-        nodeC.children.add(nodeD);
-        nodeD.children.add(nodeA);
-
-
-        Graph graph = new Graph(nodeA);
-
-        Set<Graph.Node> nodes = graph.getNodes(Graph.SEARCH_MODE.BFS);
-        assertEquals(4, nodes.size());
-        assertTrue(nodes.contains(nodeA));
-        assertTrue(nodes.contains(nodeB));
-        assertTrue(nodes.contains(nodeC));
-        assertTrue(nodes.contains(nodeD));
+        assertTrue(nodeA.contains("C"));
+        assertFalse(nodeA.contains("E"));
     }
 }
