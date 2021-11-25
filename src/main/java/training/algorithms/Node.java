@@ -1,6 +1,7 @@
 package training.algorithms;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Node {
     String value;
@@ -45,7 +46,13 @@ public class Node {
                         return true;
                     }
                     neighbor.visited = true;
-                    queue.addAll(neighbor.neighbors);
+                    queue.addAll(
+                        neighbor.neighbors.stream().filter(
+                            n -> !n.visited
+                        ).collect(
+                            Collectors.toSet()
+                        )
+                    );
                 }
             }
         }
