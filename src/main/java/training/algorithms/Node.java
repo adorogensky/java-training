@@ -40,20 +40,18 @@ public class Node {
         while (!queue.isEmpty()) {
             currentNode = queue.remove();
 
-            for (Node neighbor : currentNode.neighbors) {
-                if (!neighbor.visited) {
-                    if (Objects.equals(neighbor.value, value)) {
-                        return true;
-                    }
-                    neighbor.visited = true;
-                    queue.addAll(
-                        neighbor.neighbors.stream().filter(
-                            n -> !n.visited
-                        ).collect(
-                            Collectors.toSet()
-                        )
-                    );
+            for (Node neighbor : currentNode.neighbors.stream().filter(n -> !n.visited).collect(Collectors.toSet())) {
+                if (Objects.equals(neighbor.value, value)) {
+                    return true;
                 }
+                neighbor.visited = true;
+                queue.addAll(
+                    neighbor.neighbors.stream().filter(
+                        n -> !n.visited
+                    ).collect(
+                        Collectors.toSet()
+                    )
+                );
             }
         }
 
