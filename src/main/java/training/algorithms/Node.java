@@ -1,7 +1,5 @@
 package training.algorithms;
 
-import com.sun.jmx.remote.internal.ArrayQueue;
-
 import java.util.*;
 
 public class Node {
@@ -24,17 +22,17 @@ public class Node {
     }
 
     boolean contains(String value) {
-        return dfs(this, value);
+        return bfs(this, value);
     }
 
-    private boolean bfs(String value) {
-        if (Objects.equals(this.value, value)) {
+    private boolean bfs(Node node, String value) {
+        if (Objects.equals(node.value, value)) {
             return true;
         }
 
-        this.visited = true;
+        node.visited = true;
         Queue<Node> queue = new LinkedList<>();
-        queue.add(this);
+        queue.add(node);
 
         Node currentNode;
 
