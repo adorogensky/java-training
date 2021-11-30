@@ -43,7 +43,9 @@ public class Graph<T> {
         return adjacencyMap.get(x) != null;
     }
 
-    public List<String> shortestPath(T x, T y) {
-        return new ArrayList<>();
+    public List<String> shortestPaths(T x, T y) {
+        List<String> shortestPaths = new ArrayList<>();
+        shortestPaths.add(x.toString() + " -> " + y.toString());
+        return shortestPaths;
     }
 }

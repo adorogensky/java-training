@@ -2,9 +2,7 @@ package training.algorithms;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,5 +70,13 @@ public class GraphTests {
         assertTrue(g.contains("C"));
         assertTrue(g.isConnected("A", "B"));
         assertFalse(g.isConnected("B", "A"));
+    }
+
+    @Test
+    public void shortestPath_1_node_linear_graph() {
+        Graph<String> g = new Graph<>();
+        g.connect("A", "A");
+        List<String> shortestPaths = g.shortestPaths("A", "A");
+        assertTrue(shortestPaths.contains("A -> A"));
     }
 }
