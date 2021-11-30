@@ -79,4 +79,13 @@ public class GraphTests {
         List<String> shortestPaths = g.shortestPaths("A", "A");
         assertTrue(shortestPaths.contains("A -> A"));
     }
+
+    @Test
+    public void shortestPath_2_node_linear_graph() {
+        Graph<String> g = new Graph<>();
+        g.connect("A", "B");
+        List<String> shortestPaths = g.shortestPaths("A", "B");
+        assertTrue(shortestPaths.contains("A -> B"));
+    }
+
 }
