@@ -27,6 +27,10 @@ public class Graph<T> {
         }
     }
 
+    public void addNode(T x) {
+        adjacencyMap.put(x, null);
+    }
+
     public boolean isConnected(T x, T y) {
         return adjacencyMap.get(x) != null && adjacencyMap.get(x).contains(y);
     }
@@ -44,8 +48,32 @@ public class Graph<T> {
     }
 
     public List<String> shortestPaths(T x, T y) {
-        List<String> shortestPaths = new ArrayList<>();
-        shortestPaths.add(x.toString() + " -> " + y.toString());
-        return shortestPaths;
+        List<String> path = new ArrayList<>();
+        T currentNode = x;
+
+        Set<T> visitedNodes = new HashSet<>();
+        visitedNodes.add(currentNode);
+        path.add(currentNode.toString());
+
+        while (!y.equals(currentNode)) {
+            currentNode = adjacencyMap.get(currentNode).stream().filter(
+                node -> !visitedNodes.contains(node)
+            ).findFirst().orElse(null);
+
+            if (currentNode != null) {
+                path.add(currentNode.toString());
+                visitedNodes.add(currentNode);
+            };
+        }
+
+        if (path.size() == 1) {
+            return Collections.singletonList(
+                path.get(0) + " -> " + path.get(0)
+            );
+        } else {
+            return Collections.singletonList(
+                String.join(" -> ", path)
+            );
+        }
     }
 }
